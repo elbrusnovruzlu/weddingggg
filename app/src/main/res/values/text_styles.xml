@@ -1,0 +1,107 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <style name="title_1_bold_black" parent="@android:style/TextAppearance.Widget.TextView">
+        <item name="android:textColor">@color/black</item>
+        <item name="android:textSize">28sp</item>
+        <item name="android:fontFamily">@font/sf_pro_rounded_bold</item>
+    </style>
+
+    <style name="title_1_bold_white" parent="@android:style/TextAppearance.Widget.TextView">
+        <item name="android:textColor">@color/white</item>
+        <item name="android:textSize">28sp</item>
+        <item name="android:fontFamily">@font/sf_pro_rounded_bold</item>
+    </style>
+
+    <style name="title_3_bold" parent="@android:style/TextAppearance.Widget.TextView">
+        <item name="android:textColor">@color/black</item>
+        <item name="android:textSize">20sp</item>
+        <item name="android:fontFamily">@font/sf_pro_rounded_bold</item>
+    </style>
+
+    <style name="sub_headline_semi_bold" parent="@android:style/TextAppearance.Widget.TextView">
+        <item name="android:textColor">@color/black</item>
+        <item name="android:textSize">14sp</item>
+        <item name="android:fontFamily">@font/sf_pro_rounded_semibold</item>
+    </style>
+
+    <style name="sub_headline_medium" parent="@android:style/TextAppearance.Widget.TextView">
+        <item name="android:textColor">@color/black</item>
+        <item name="android:textSize">14sp</item>
+        <item name="android:fontFamily">@font/sf_pro_rounded_medium</item>
+    </style>
+
+    <style name="body_semi_bold" parent="@android:style/TextAppearance.Widget.TextView">
+        <item name="android:textColor">@color/black</item>
+        <item name="android:textSize">18sp</item>
+        <item name="android:fontFamily">@font/sf_pro_rounded_semibold</item>
+    </style>
+
+    <style name="callout_semi_bold" parent="@android:style/TextAppearance.Widget.TextView">
+        <item name="android:textColor">@color/black</item>
+        <item name="android:textSize">16sp</item>
+        <item name="android:fontFamily">@font/sf_pro_rounded_semibold</item>
+    </style>
+
+    <style name="callout_regular_gray" parent="@android:style/TextAppearance.Widget.TextView">
+        <item name="android:textColor">@color/black_50</item>
+        <item name="android:textSize">16sp</item>
+        <item name="android:fontFamily">@font/sf_pro_rounded_regular</item>
+    </style>
+
+    <style name="callout_regular_white" parent="@android:style/TextAppearance.Widget.TextView">
+        <item name="android:textColor">@color/white</item>
+        <item name="android:textSize">16sp</item>
+        <item name="android:fontFamily">@font/sf_pro_rounded_regular</item>
+    </style>
+
+    <style name="callout_regular_white_50" parent="@android:style/TextAppearance.Widget.TextView">
+        <item name="android:textColor">@color/white_50</item>
+        <item name="android:textSize">16sp</item>
+        <item name="android:fontFamily">@font/sf_pro_rounded_regular</item>
+    </style>
+
+    <style name="callout_medium_white" parent="@android:style/TextAppearance.Widget.TextView">
+        <item name="android:textColor">@color/white</item>
+        <item name="android:textSize">16sp</item>
+        <item name="android:fontFamily">@font/sf_pro_rounded_medium</item>
+    </style>
+
+    <style name="callout_medium_black" parent="@android:style/TextAppearance.Widget.TextView">
+        <item name="android:textColor">@color/black</item>
+        <item name="android:textSize">16sp</item>
+        <item name="android:fontFamily">@font/sf_pro_rounded_medium</item>
+    </style>
+
+    <style name="caption_regular_gray" parent="@android:style/TextAppearance.Widget.TextView">
+        <item name="android:textColor">@color/black_50</item>
+        <item name="android:textSize">12sp</item>
+        <item name="android:fontFamily">@font/sf_pro_rounded_regular</item>
+    </style>
+
+    <style name="caption_medium_gray" parent="@android:style/TextAppearance.Widget.TextView">
+        <item name="android:textColor">@color/black_50</item>
+        <item name="android:textSize">12sp</item>
+        <item name="android:fontFamily">@font/sf_pro_rounded_medium</item>
+    </style>
+
+    <style name="caption_medium_white" parent="@android:style/TextAppearance.Widget.TextView">
+        <item name="android:textColor">@color/white</item>
+        <item name="android:textSize">12sp</item>
+        <item name="android:fontFamily">@font/sf_pro_rounded_medium</item>
+    </style>
+
+    <style name="caption_medium_brand" parent="@android:style/TextAppearance.Widget.TextView">
+        <item name="android:textColor">@color/brandColor</item>
+        <item name="android:textSize">12sp</item>
+        <item name="android:fontFamily">@font/sf_pro_rounded_medium</item>
+    </style>
+
+    <style name="MyCustomTextAppearance" parent="TextAppearance.Design.Tab">
+        <item name="textAllCaps">false</item>
+        <item name="android:textAllCaps">false</item>
+        <item name="android:textSize">12sp</item>
+        <item name="android:fontFamily">@font/sf_pro_rounded_semibold</item>
+        <item name="android:includeFontPadding">false</item>
+    </style>
+
+</resources>

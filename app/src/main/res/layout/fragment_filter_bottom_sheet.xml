@@ -1,0 +1,172 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:paddingTop="?attr/actionBarSize"
+    android:id="@+id/rootView"
+    android:background="@color/transparent"
+    tools:context=".presentation.sliderinfo.SliderInfoBottomSheetFragment">
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/container"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:paddingHorizontal="20dp"
+        android:paddingTop="16dp"
+        android:background="@drawable/bottom_sheet_background">
+
+        <TextView
+            android:id="@+id/filterTextView"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Filter"
+            android:includeFontPadding="false"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            android:textAppearance="@style/body_semi_bold"/>
+
+        <ImageView
+            android:id="@+id/close"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:src="@drawable/ic_close"
+            app:layout_constraintTop_toTopOf="@+id/filterTextView"
+            app:layout_constraintBottom_toBottomOf="@+id/filterTextView"
+            app:layout_constraintEnd_toEndOf="parent"
+            android:textAppearance="@style/body_semi_bold"/>
+
+        <TextView
+            android:id="@+id/categoryTextView"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Kateqoriyalar"
+            app:layout_constraintTop_toBottomOf="@+id/filterTextView"
+            app:layout_constraintStart_toStartOf="parent"
+            android:layout_marginTop="20dp"
+            android:includeFontPadding="false"
+            android:textAppearance="@style/sub_headline_semi_bold"/>
+
+        <RadioGroup
+            android:id="@+id/radioGroup"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="12dp"
+            android:orientation="horizontal"
+            app:layout_constraintTop_toBottomOf="@+id/categoryTextView">
+
+            <RadioButton
+                android:id="@+id/decorationRadioButton"
+                android:layout_width="wrap_content"
+                android:layout_height="32dp"
+                android:button="@color/transparent"
+                android:paddingHorizontal="12dp"
+                android:textAppearance="@style/caption_medium_gray"
+                android:includeFontPadding="false"
+                android:background="@drawable/radio_button_selector"
+                android:textColor="@color/radio_button_text_color"
+                android:text="Dekorasiya" />
+
+            <RadioButton
+                android:id="@+id/photographyRadioButton"
+                android:layout_width="wrap_content"
+                android:layout_height="32dp"
+                android:button="@color/transparent"
+                android:paddingHorizontal="12dp"
+                android:textAppearance="@style/caption_medium_gray"
+                android:includeFontPadding="false"
+                android:layout_marginStart="8dp"
+                android:background="@drawable/radio_button_selector"
+                android:textColor="@color/radio_button_text_color"
+                android:text="Fotosessiya" />
+
+            <RadioButton
+                android:id="@+id/showRadioButton"
+                android:layout_width="wrap_content"
+                android:layout_height="32dp"
+                android:button="@color/transparent"
+                android:paddingHorizontal="12dp"
+                android:textAppearance="@style/caption_medium_gray"
+                android:includeFontPadding="false"
+                android:layout_marginStart="8dp"
+                android:background="@drawable/radio_button_selector"
+                android:textColor="@color/radio_button_text_color"
+                android:text="Şoular" />
+
+        </RadioGroup>
+
+        <TextView
+            android:id="@+id/priceTextView"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Qiymət aralığı"
+            app:layout_constraintTop_toBottomOf="@+id/radioGroup"
+            app:layout_constraintStart_toStartOf="parent"
+            android:layout_marginTop="28dp"
+            android:includeFontPadding="false"
+            android:textAppearance="@style/sub_headline_semi_bold"/>
+
+        <com.google.android.material.slider.RangeSlider
+            android:id="@+id/priceSlider"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="12dp"
+            android:valueFrom="0"
+            android:stepSize="50"
+            app:labelBehavior="gone"
+            app:layout_constraintTop_toBottomOf="@+id/priceTextView"/>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="16dp"
+            android:orientation="horizontal"
+            android:weightSum="2"
+            app:layout_constraintTop_toBottomOf="@+id/priceSlider">
+
+            <include
+                android:id="@+id/minPrice"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                layout="@layout/price_layout"/>
+
+            <include
+                android:id="@+id/maxPrice"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:layout_marginStart="8dp"
+                layout="@layout/price_layout"/>
+
+        </LinearLayout>
+
+
+        <com.google.android.material.button.MaterialButton
+            android:id="@+id/filterBtn"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            style="@style/AppTheme.ButtonWithoutInset"
+            android:text="Filter et"
+            android:theme="@style/AppTheme.ActiveButton"
+            android:textAppearance="@style/callout_medium_white"
+            android:layout_marginBottom="16dp"
+            app:layout_constraintBottom_toTopOf="@+id/clearFilterBtn" />
+
+        <com.google.android.material.button.MaterialButton
+            android:id="@+id/clearFilterBtn"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            style="@style/AppTheme.ButtonWithoutInset"
+            android:text="Filteri sifirla"
+            android:theme="@style/AppTheme.SecondaryButton"
+            android:textAppearance="@style/callout_medium_white"
+            android:layout_marginBottom="16dp"
+            app:layout_constraintBottom_toBottomOf="parent" />
+
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+
+</androidx.constraintlayout.widget.ConstraintLayout>

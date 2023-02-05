@@ -1,0 +1,100 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="150dp"
+    android:layout_height="wrap_content"
+    android:gravity="center"
+    android:paddingHorizontal="4dp"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <androidx.cardview.widget.CardView
+        android:id="@+id/cardView"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        app:cardElevation="0dp"
+        app:cardCornerRadius="12dp">
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:orientation="vertical"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:paddingBottom="12dp">
+
+            <androidx.cardview.widget.CardView
+                android:id="@+id/imageHolder"
+                android:layout_width="match_parent"
+                android:layout_height="0dp"
+                android:layout_margin="4dp"
+                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintDimensionRatio="1"
+                app:cardElevation="0dp"
+                app:cardCornerRadius="12dp">
+                <ImageView
+                    android:id="@+id/imageView"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:scaleType="centerCrop" />
+
+            </androidx.cardview.widget.CardView>
+
+            <TextView
+                android:id="@+id/price"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="200 ₼"
+                android:textAppearance="@style/caption_medium_white"
+                android:background="@drawable/round_background_brand_color"
+                android:layout_marginStart="8dp"
+                android:layout_marginBottom="8dp"
+                android:paddingHorizontal="8dp"
+                android:paddingVertical="4dp"
+                android:includeFontPadding="false"
+                app:layout_constraintStart_toStartOf="@+id/imageHolder"
+                app:layout_constraintBottom_toBottomOf="@+id/imageHolder"/>
+
+            <ToggleButton
+                android:id="@+id/favButton"
+                android:layout_width="29dp"
+                android:layout_height="28dp"
+                android:textOn=""
+                android:textOff=""
+                android:checked="true"
+                android:layout_marginTop="8dp"
+                android:layout_marginEnd="8dp"
+                android:background="@drawable/toggle_background"
+                app:layout_constraintEnd_toEndOf="@+id/imageHolder"
+                app:layout_constraintTop_toTopOf="@+id/imageHolder"
+                />
+
+            <TextView
+                android:id="@+id/name"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:text="Atesgah"
+                android:textAppearance="@style/sub_headline_semi_bold"
+                app:layout_constraintTop_toBottomOf="@+id/imageHolder"
+                app:layout_constraintStart_toStartOf="@+id/imageHolder"
+                app:layout_constraintEnd_toEndOf="@id/imageHolder"
+                android:layout_marginTop="12dp"
+                android:includeFontPadding="false"
+                android:layout_marginHorizontal="12dp"
+                android:maxLines="1"
+                android:ellipsize="end" />
+
+            <TextView
+                android:id="@+id/type"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:text="Dekorasiya"
+                android:includeFontPadding="false"
+                android:textAppearance="@style/caption_medium_gray"
+                app:layout_constraintTop_toBottomOf="@+id/name"
+                app:layout_constraintStart_toStartOf="@+id/imageHolder"
+                app:layout_constraintEnd_toEndOf="@id/imageHolder"
+                android:layout_marginTop="2dp"
+                android:layout_marginStart="12dp" />
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
+    </androidx.cardview.widget.CardView>
+
+</LinearLayout>

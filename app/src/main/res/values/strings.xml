@@ -1,0 +1,15 @@
+<resources>
+    <string name="app_name">Wedding</string>
+    <string name="category_decoration">Decoration</string>
+    <string name="category_photograph">Photograph</string>
+    <string name="category_dance_show">Dance show</string>
+    <string name="welcome">Xoş gəldin! 👋🏼</string>
+    <string name="dashboard_subtitle">Now event management is easy!</string>
+    <string name="categories">Categories</string>
+    <string name="price_starts_at">%1$s ₼</string>
+    <string name="popular_offers">Popular offers</string>
+    <string name="offer_detail_info">Info</string>
+    <string name="offer_detail_contact">Contact</string>
+    <string name="explore_now">Elə indi kəşf et</string>
+    <string name="all">Hamisi</string>
+</resources>

@@ -1,0 +1,40 @@
+{
+  "project_info": {
+    "project_number": "628003228293",
+    "firebase_url": "https://event-management-482ed-default-rtdb.europe-west1.firebasedatabase.app",
+    "project_id": "event-management-482ed",
+    "storage_bucket": "event-management-482ed.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:628003228293:android:a76cf1a60b3dbf739977ec",
+        "android_client_info": {
+          "package_name": "com.elno.wedding"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "628003228293-h1oscvpgpsmdimmei9qh9agip6s51mi0.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyB3x0qXDbwVgRf6pX367XH-UZBTlTEicYU"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "628003228293-h1oscvpgpsmdimmei9qh9agip6s51mi0.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
