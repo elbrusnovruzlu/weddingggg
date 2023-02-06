@@ -20,4 +20,5 @@
     <color name="shimmer_background">#dddddd</color>
     <color name="background">#f5f5fa</color>
     <color name="black_80">#CC000000</color>
+    <color name="gallery_background">#19212a</color>
 </resources>

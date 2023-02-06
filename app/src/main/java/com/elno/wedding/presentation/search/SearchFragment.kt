@@ -8,6 +8,7 @@ import androidx.core.os.bundleOf
 import androidx.core.view.isVisible
 import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
+import androidx.recyclerview.widget.GridLayoutManager
 import com.elno.wedding.R
 import com.elno.wedding.common.Constants
 import com.elno.wedding.common.Resource
@@ -18,7 +19,7 @@ import com.elno.wedding.presentation.base.BaseFragment
 import com.elno.wedding.presentation.search.filter.Category
 import com.elno.wedding.presentation.search.filter.FilterBottomSheetFragment
 import dagger.hilt.android.AndroidEntryPoint
-import java.util.ArrayList
+
 
 @AndroidEntryPoint
 class SearchFragment : BaseFragment<FragmentSearchBinding>(FragmentSearchBinding::inflate) {
@@ -38,12 +39,11 @@ class SearchFragment : BaseFragment<FragmentSearchBinding>(FragmentSearchBinding
     }
 
     override fun setupViews() {
-        context?.let { ctx ->
-            adapter = VendorAdapter(ctx) {
-                onOfferClick(it)
-            }
-            binding.gridView.adapter = adapter
+        adapter = VendorAdapter() {
+            onOfferClick(it)
         }
+        binding.gridView.adapter = adapter
+        binding.gridView.layoutManager = GridLayoutManager(context, 2)
         setFilterIcon(viewModel.categoryType, viewModel.minPrice, viewModel.maxPrice)
         viewModel.getVendorList()
     }
@@ -89,7 +89,7 @@ class SearchFragment : BaseFragment<FragmentSearchBinding>(FragmentSearchBinding
                 binding.vendorShimmerView.startShimmer()
             }
             is  Resource.Success -> {
-                resource.data?.let { adapter?.setData(it) }
+                resource.data?.let { adapter?.submitList(it) }
                 binding.vendorShimmerView.stopShimmer()
                 binding.gridView.isVisible = true
                 binding.vendorShimmerView.isVisible = false

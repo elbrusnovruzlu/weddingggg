@@ -13,5 +13,7 @@ data class VendorModel(
     val location: Map<String, Double>? = null,
     val description: String? = null,
     val mobile: String? = null,
-    val whatsapp: String? = null
+    val instagram: String? = null,
+    val whatsapp: String? = null,
+    val images: ArrayList<String>? = null
 ): Parcelable

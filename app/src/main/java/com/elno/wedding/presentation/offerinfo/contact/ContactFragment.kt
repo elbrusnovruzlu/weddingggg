@@ -1,9 +1,9 @@
 package com.elno.wedding.presentation.offerinfo.contact
 
+import android.content.ActivityNotFoundException
 import android.content.Intent
 import android.net.Uri
 import android.os.Bundle
-import android.view.MotionEvent
 import android.view.View
 import androidx.core.view.isVisible
 import com.elno.wedding.R
@@ -14,7 +14,6 @@ import com.elno.wedding.presentation.base.BaseFragment
 import com.google.android.gms.maps.CameraUpdateFactory
 import com.google.android.gms.maps.GoogleMap
 import com.google.android.gms.maps.OnMapReadyCallback
-import com.google.android.gms.maps.SupportMapFragment
 import com.google.android.gms.maps.model.LatLng
 import com.google.android.gms.maps.model.MarkerOptions
 import dagger.hilt.android.AndroidEntryPoint
@@ -47,8 +46,10 @@ class ContactFragment : BaseFragment<FragmentContactBinding>(FragmentContactBind
         }
         binding.wp.icon.setImageResource(R.drawable.ic_whatsapp)
         binding.call.icon.setImageResource(R.drawable.ic_phone)
+        binding.instagram.icon.setImageResource(R.drawable.ic_instagram)
         binding.wp.title.text = "Whatsapp-da yaz"
         binding.call.title.text = "Zəng et"
+        binding.instagram.title.text = "Instagram"
     }
 
     override fun setupListeners() {
@@ -70,7 +71,30 @@ class ContactFragment : BaseFragment<FragmentContactBinding>(FragmentContactBind
 
         }
 
+        binding.instagram.root.setOnClickListener {
+            vendorModel?.instagram?.let { instagram ->
+                val uri = Uri.parse("http://instagram.com/_u/$instagram")
+                val likeIng = Intent(Intent.ACTION_VIEW, uri)
+
+                likeIng.setPackage("com.instagram.android")
+
+                try {
+                    startActivity(likeIng)
+                } catch (e: ActivityNotFoundException) {
+                    startActivity(
+                        Intent(
+                            Intent.ACTION_VIEW,
+                            Uri.parse("http://instagram.com/$instagram")
+                        )
+                    )
+                }
+            }
+
+        }
+
+
     }
+
 
     override fun onMapReady(googleMap: GoogleMap) {
         mMap = googleMap

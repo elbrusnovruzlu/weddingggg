@@ -1,5 +1,6 @@
 package com.elno.wedding.presentation.adapter
 
+import android.annotation.SuppressLint
 import android.content.Context
 import android.view.LayoutInflater
 import android.view.View
@@ -9,75 +10,72 @@ import android.widget.ImageView
 import android.widget.TextView
 import android.widget.ToggleButton
 import androidx.cardview.widget.CardView
+import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import com.elno.wedding.R
+import com.elno.wedding.common.UtilityFunctions
 import com.elno.wedding.data.local.LocalDataStore
 import com.elno.wedding.domain.model.VendorModel
 
 class VendorAdapter(
-    private val context: Context,
     private val onClick: (item: VendorModel?) -> Unit
-) : BaseAdapter() {
+) :  RecyclerView.Adapter<VendorAdapter.ViewHolder>() {
 
-    private val vendorList: MutableList<VendorModel?> = arrayListOf()
+    private val list = arrayListOf<VendorModel?>()
 
-    fun setData(list: MutableList<VendorModel?>) {
-        vendorList.clear()
-        vendorList.addAll(list)
+    @SuppressLint("NotifyDataSetChanged")
+    fun submitList(newList: MutableList<VendorModel?>) {
+        list.clear()
+        list.addAll(newList)
         notifyDataSetChanged()
     }
 
-    // below method is use to return the count of course list
-    override fun getCount(): Int {
-        return vendorList.size
+    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
+        val inflater = LayoutInflater.from(parent.context)
+        val view = inflater.inflate(R.layout.item_offer, parent, false)
+        return ViewHolder(view)
     }
 
-    // below function is use to return the item of grid view.
-    override fun getItem(position: Int): VendorModel? {
-        return vendorList[position]
+    override fun onBindViewHolder(holder: ViewHolder, position: Int) {
+        val item = list[position]
+        holder.bind(item, onClick)
     }
 
-    // below function is use to return item id of grid view.
-    override fun getItemId(position: Int): Long {
-        return 0
+    override fun getItemCount(): Int {
+        return list.size
     }
 
-    // in below function we are getting individual item of grid view.
-    override fun getView(position: Int, convertView: View?, parent: ViewGroup?): View? {
+    class ViewHolder(view: View) : RecyclerView.ViewHolder(view) {
+        private val imageView: ImageView = view.findViewById(R.id.imageView)
+        private val name: TextView = view.findViewById(R.id.name)
+        private val price: TextView = view.findViewById(R.id.price)
+        private val type: TextView = view.findViewById(R.id.type)
+        private val favButton: ToggleButton = view.findViewById(R.id.favButton)
+        private val cardView: CardView = view.findViewById(R.id.cardView)
 
-        val layoutInflater = context.getSystemService(Context.LAYOUT_INFLATER_SERVICE) as LayoutInflater
-        val view = convertView ?: layoutInflater.inflate(R.layout.item_offer, null)
-
-
-        val imageView = view.findViewById<ImageView>(R.id.imageView)
-        val name = view.findViewById<TextView>(R.id.name)
-        val price = view.findViewById<TextView>(R.id.price)
-        val type = view.findViewById<TextView>(R.id.type)
-        val favButton = view.findViewById<ToggleButton>(R.id.favButton)
-        val cardView = view.findViewById<CardView>(R.id.cardView)
-
-        val item = getItem(position)
-
-        item?.imageUrl.let {
-            Glide.with(context)
-                .load(it)
-                .into(imageView)
-        }
-        name.text = item?.title
-        type.text = item?.type
-        price.text = context.getString(R.string.price_starts_at, item?.minPrice.toString())
-        favButton.isChecked = LocalDataStore(context).getList().contains(item) == true
-        cardView.setOnClickListener {
-            onClick(item)
-        }
-        favButton.setOnCheckedChangeListener { _, isChecked ->
-            if(isChecked) {
-                LocalDataStore(context).addToList(item)
+        fun bind(item: VendorModel?, onClick: (categoryModel: VendorModel?) -> Unit) {
+            item?.imageUrl.let {
+                Glide.with(itemView.context)
+                    .load(it)
+                    .into(imageView)
             }
-            else {
-                LocalDataStore(context).removeFromList(item)
+            name.text = item?.title
+            type.text = item?.type
+            price.text = itemView.context.getString(R.string.price_starts_at, item?.minPrice.toString())
+            favButton.isChecked = LocalDataStore(itemView.context).getList().contains(item) == true
+            cardView.setOnClickListener {
+                onClick(item)
+            }
+            favButton.setOnCheckedChangeListener { _, isChecked ->
+                if(isChecked) {
+                    LocalDataStore(itemView.context).addToList(item)
+                }
+                else {
+                    LocalDataStore(itemView.context).removeFromList(item)
+                }
             }
         }
-        return view
     }
+
+
 }

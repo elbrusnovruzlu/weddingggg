@@ -19,11 +19,14 @@
         <entry key="app/src/main/res/drawable/ic_back.xml" value="0.1575" />
         <entry key="app/src/main/res/drawable/ic_back_transparent_background.xml" value="0.1575" />
         <entry key="app/src/main/res/drawable/ic_bike.xml" value="0.1305" />
+        <entry key="app/src/main/res/drawable/ic_close.xml" value="0.1065" />
+        <entry key="app/src/main/res/drawable/ic_close_dark.xml" value="0.1065" />
         <entry key="app/src/main/res/drawable/ic_dance_show.xml" value="0.2035" />
         <entry key="app/src/main/res/drawable/ic_decoration.xml" value="0.2035" />
         <entry key="app/src/main/res/drawable/ic_favourite.xml" value="0.1465" />
         <entry key="app/src/main/res/drawable/ic_filter_inactive.xml" value="0.221" />
         <entry key="app/src/main/res/drawable/ic_home.xml" value="0.1465" />
+        <entry key="app/src/main/res/drawable/ic_instagram.xml" value="0.221" />
         <entry key="app/src/main/res/drawable/ic_manat.xml" value="0.1465" />
         <entry key="app/src/main/res/drawable/ic_more.xml" value="0.131" />
         <entry key="app/src/main/res/drawable/ic_notification.xml" value="0.128" />
@@ -50,15 +53,16 @@
         <entry key="app/src/main/res/drawable/unselected_toggle.xml" value="0.131" />
         <entry key="app/src/main/res/layout/activity_main.xml" value="0.1890625" />
         <entry key="app/src/main/res/layout/default_cell.xml" value="0.1882372869961505" />
+        <entry key="app/src/main/res/layout/dialog_gallery_slider_fullscreen.xml" value="0.19579533941236069" />
         <entry key="app/src/main/res/layout/fragment_contact.xml" value="0.24399566650390628" />
         <entry key="app/src/main/res/layout/fragment_dashboard.xml" value="0.18563899287471064" />
         <entry key="app/src/main/res/layout/fragment_favourite.xml" value="0.14114583333333333" />
-        <entry key="app/src/main/res/layout/fragment_filter_bottom_sheet.xml" value="0.44405594405594406" />
+        <entry key="app/src/main/res/layout/fragment_filter_bottom_sheet.xml" value="0.35281837160751567" />
         <entry key="app/src/main/res/layout/fragment_more.xml" value="0.203125" />
         <entry key="app/src/main/res/layout/fragment_notification.xml" value="0.3745471014492754" />
         <entry key="app/src/main/res/layout/fragment_offer_bottom_sheet.xml" value="0.29280223619846263" />
         <entry key="app/src/main/res/layout/fragment_offer_detail.xml" value="0.18076923076923077" />
-        <entry key="app/src/main/res/layout/fragment_offer_gallery.xml" value="0.3745471014492754" />
+        <entry key="app/src/main/res/layout/fragment_offer_gallery.xml" value="0.1" />
         <entry key="app/src/main/res/layout/fragment_offer_info.xml" value="0.1" />
         <entry key="app/src/main/res/layout/fragment_onboard.xml" value="0.17704191346099413" />
         <entry key="app/src/main/res/layout/fragment_search.xml" value="0.32413793103448274" />
@@ -67,7 +71,8 @@
         <entry key="app/src/main/res/layout/fragment_station_detail.xml" value="0.203125" />
         <entry key="app/src/main/res/layout/fragment_station_list.xml" value="0.203125" />
         <entry key="app/src/main/res/layout/item_category.xml" value="0.4814147949218749" />
-        <entry key="app/src/main/res/layout/item_offer.xml" value="0.618421052631579" />
+        <entry key="app/src/main/res/layout/item_gallery.xml" value="0.19630192502532928" />
+        <entry key="app/src/main/res/layout/item_offer.xml" value="0.36789309853001645" />
         <entry key="app/src/main/res/layout/item_slider.xml" value="0.21706927168391743" />
         <entry key="app/src/main/res/layout/price_layout.xml" value="0.3894927536231884" />
         <entry key="app/src/main/res/layout/station_item_view.xml" value="0.203125" />

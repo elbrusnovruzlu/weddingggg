@@ -1,27 +1,12 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.core.widget.NestedScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.recyclerview.widget.RecyclerView xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/gridView"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    app:layout_behavior="@string/appbar_scrolling_view_behavior"
-    android:paddingHorizontal="20dp"
-    android:paddingBottom="100dp"
+    android:layout_height="wrap_content"
     android:clipToPadding="false"
-    app:layout_constraintBottom_toBottomOf="parent"
-    app:layout_constraintEnd_toEndOf="parent"
-    app:layout_constraintStart_toStartOf="parent"
-    app:layout_constraintTop_toTopOf="parent">
+    android:paddingHorizontal="16dp"
+    android:nestedScrollingEnabled="true"
+    app:layout_behavior="@string/appbar_scrolling_view_behavior"
+    android:paddingBottom="80dp" />
 
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:orientation="vertical">
-
-        <TextView
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Volutpat blandit aliquam etiam erat. In hendrerit gravida rutrum quisque non tellus orci. Diam quis enim lobortis scelerisque. Sit amet porttitor eget dolor morbi non arcu risus. Vulputate ut pharetra sit amet. Placerat in egestas erat imperdiet sed euismod nisi porta lorem. Leo vel fringilla est ullamcorper eget. Feugiat in fermentum posuere urna. In tellus integer feugiat scelerisque. Turpis egestas integer eget aliquet nibh praesent. Integer quis auctor elit sed. Nunc sed velit dignissim sodales ut eu sem. Non enim praesent elementum facilisis leo. Praesent elementum facilisis leo vel fringilla est ullamcorper. Augue neque gravida in fermentum et sollicitudin. Id cursus metus aliquam eleifend mi in nulla. Tempus urna et pharetra pharetra massa. Eget mauris pharetra et ultrices neque ornare aenean euismod elementum. Porttitor massa id neque aliquam vestibulum morbi blandit cursus Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Volutpat blandit aliquam etiam erat. In hendrerit gravida rutrum quisque non tellus orci. Diam quis enim lobortis scelerisque. Sit amet porttitor eget dolor morbi non arcu risus. Vulputate ut pharetra sit amet. Placerat in egestas erat imperdiet sed euismod nisi porta lorem. Leo vel fringilla est ullamcorper eget. Feugiat in fermentum posuere urna. In tellus integer feugiat scelerisque. Turpis egestas integer eget aliquet nibh praesent. Integer quis auctor elit sed. Nunc sed velit dignissim sodales ut eu sem. Non enim praesent elementum facilisis leo. Praesent elementum facilisis leo vel fringilla est ullamcorper. Augue neque gravida in fermentum et sollicitudin. Id cursus metus aliquam eleifend mi in nulla. Tempus urna et pharetra pharetra massa. Eget mauris pharetra et ultrices neque ornare aenean euismod elementum. Porttitor massa id neque aliquam vestibulum morbi blandit cursus Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Volutpat blandit aliquam etiam erat. In hendrerit gravida rutrum quisque non tellus orci. Diam quis enim lobortis scelerisque. Sit amet porttitor eget dolor morbi non arcu risus. Vulputate ut pharetra sit amet. Placerat in egestas erat imperdiet sed euismod nisi porta lorem. Leo vel fringilla est ullamcorper eget. Feugiat in fermentum posuere urna. In tellus integer feugiat scelerisque. Turpis egestas integer eget aliquet nibh praesent. Integer quis auctor elit sed. Nunc sed velit dignissim sodales ut eu sem. Non enim praesent elementum facilisis leo. Praesent elementum facilisis leo vel fringilla est ullamcorper. Augue neque gravida in fermentum et sollicitudin. Id cursus metus aliquam eleifend mi in nulla. Tempus urna et pharetra pharetra massa. Eget mauris pharetra et ultrices neque ornare aenean euismod elementum. Porttitor massa id neque aliquam vestibulum morbi blandit cursus" />
-
-    </LinearLayout>
-
-</androidx.core.widget.NestedScrollView>
