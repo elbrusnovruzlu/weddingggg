@@ -47,52 +47,59 @@ class ContactFragment : BaseFragment<FragmentContactBinding>(FragmentContactBind
         binding.wp.icon.setImageResource(R.drawable.ic_whatsapp)
         binding.call.icon.setImageResource(R.drawable.ic_phone)
         binding.instagram.icon.setImageResource(R.drawable.ic_instagram)
-        binding.wp.title.text = "Whatsapp-da yaz"
-        binding.call.title.text = "Zəng et"
-        binding.instagram.title.text = "Instagram"
+        binding.wp.title.text = getString(R.string.contact_on_whatsapp)
+        binding.call.title.text = getString(R.string.call)
+        binding.instagram.title.text = getString(R.string.instagram)
     }
 
     override fun setupListeners() {
         binding.wp.root.setOnClickListener {
-            vendorModel?.whatsapp?.let { wp ->
-                val url = "https://wa.me/${wp}"
-                val i = Intent(Intent.ACTION_VIEW)
-                i.data = Uri.parse(url)
-                startActivity(i)
-            }
-
+            openWhatsapp()
         }
         binding.call.root.setOnClickListener {
-            vendorModel?.mobile?.let { mobile ->
-                val dialIntent = Intent(Intent.ACTION_DIAL)
-                dialIntent.data = Uri.parse("tel:${mobile}")
-                startActivity(dialIntent)
-            }
-
+            dialPhoneNumber()
         }
 
         binding.instagram.root.setOnClickListener {
-            vendorModel?.instagram?.let { instagram ->
-                val uri = Uri.parse("http://instagram.com/_u/$instagram")
-                val likeIng = Intent(Intent.ACTION_VIEW, uri)
-
-                likeIng.setPackage("com.instagram.android")
-
-                try {
-                    startActivity(likeIng)
-                } catch (e: ActivityNotFoundException) {
-                    startActivity(
-                        Intent(
-                            Intent.ACTION_VIEW,
-                            Uri.parse("http://instagram.com/$instagram")
-                        )
-                    )
-                }
-            }
-
+            openInstagram()
         }
+    }
 
+    private fun openWhatsapp() {
+        vendorModel?.whatsapp?.let { wp ->
+            val url = "https://wa.me/${wp}"
+            val i = Intent(Intent.ACTION_VIEW)
+            i.data = Uri.parse(url)
+            startActivity(i)
+        }
+    }
 
+    private fun dialPhoneNumber() {
+        vendorModel?.mobile?.let { mobile ->
+            val dialIntent = Intent(Intent.ACTION_DIAL)
+            dialIntent.data = Uri.parse("tel:${mobile}")
+            startActivity(dialIntent)
+        }
+    }
+
+    private fun openInstagram() {
+        vendorModel?.instagram?.let { instagram ->
+            val uri = Uri.parse("http://instagram.com/_u/$instagram")
+            val likeIng = Intent(Intent.ACTION_VIEW, uri)
+
+            likeIng.setPackage("com.instagram.android")
+
+            try {
+                startActivity(likeIng)
+            } catch (e: ActivityNotFoundException) {
+                startActivity(
+                    Intent(
+                        Intent.ACTION_VIEW,
+                        Uri.parse("http://instagram.com/$instagram")
+                    )
+                )
+            }
+        }
     }
 
 

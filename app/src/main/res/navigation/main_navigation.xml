@@ -40,11 +40,20 @@
         android:id="@+id/moreFragment"
         android:name="com.elno.wedding.presentation.more.MoreFragment"
         android:label="MoreFragment"
-        tools:layout="@layout/fragment_more"/>
+        tools:layout="@layout/fragment_more">
+        <action
+            android:id="@+id/action_moreFragment_to_contactUsFragment"
+            app:destination="@id/contactUsFragment" />
+    </fragment>
     <fragment
         android:id="@+id/notificationFragment"
         android:name="com.elno.wedding.presentation.notification.NotificationFragment"
         android:label="NotificationFragment"
         tools:layout="@layout/fragment_notification"/>
+    <fragment
+        android:id="@+id/contactUsFragment"
+        android:name="com.elno.wedding.presentation.more.ContactUsFragment"
+        android:label="ContactUsFragment"
+        tools:layout="@layout/fragment_contact_us"/>
 
 </navigation>

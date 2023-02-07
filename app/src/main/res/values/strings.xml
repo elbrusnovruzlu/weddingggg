@@ -12,4 +12,18 @@
     <string name="offer_detail_contact">Contact</string>
     <string name="explore_now">Elə indi kəşf et</string>
     <string name="all">Hamisi</string>
+    <string name="contact_us">Contact us</string>
+    <string name="other">Other</string>
+    <string name="terms_and_condition">Terms and candition</string>
+    <string name="privacy_policy">Privacy Policy</string>
+    <string name="social_accounts">Social accounts</string>
+    <string name="contact_info">Contacts info</string>
+    <string name="more">Digər</string>
+    <string name="phone_number">Number</string>
+    <string name="email">Email</string>
+    <string name="instagram">Instagram</string>
+    <string name="dayz_support">Dayz - Support</string>
+    <string name="contact_on_whatsapp">Whatsapp-da yaz</string>
+    <string name="call">Zəng et</string>
+    <string name="facebook">Facebook</string>
 </resources>
