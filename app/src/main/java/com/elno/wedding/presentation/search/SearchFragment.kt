@@ -4,6 +4,7 @@ import android.content.Context
 import android.content.SharedPreferences
 import android.os.Bundle
 import android.widget.Toast
+import androidx.appcompat.widget.SearchView
 import androidx.core.os.bundleOf
 import androidx.core.view.isVisible
 import androidx.fragment.app.viewModels
@@ -12,6 +13,7 @@ import androidx.recyclerview.widget.GridLayoutManager
 import com.elno.wedding.R
 import com.elno.wedding.common.Constants
 import com.elno.wedding.common.Resource
+import com.elno.wedding.common.UtilityFunctions
 import com.elno.wedding.databinding.FragmentSearchBinding
 import com.elno.wedding.domain.model.VendorModel
 import com.elno.wedding.presentation.adapter.VendorAdapter
@@ -22,7 +24,7 @@ import dagger.hilt.android.AndroidEntryPoint
 
 
 @AndroidEntryPoint
-class SearchFragment : BaseFragment<FragmentSearchBinding>(FragmentSearchBinding::inflate) {
+class SearchFragment : BaseFragment<FragmentSearchBinding>(FragmentSearchBinding::inflate), SearchView.OnQueryTextListener {
 
     private val viewModel: SearchViewModel by viewModels()
     private var adapter: VendorAdapter? = null
@@ -72,6 +74,10 @@ class SearchFragment : BaseFragment<FragmentSearchBinding>(FragmentSearchBinding
             setFilterIcon(viewModel.categoryType, viewModel.minPrice, viewModel.maxPrice)
             viewModel.getVendorList()
         }
+        binding.favourite.setOnClickListener {
+            findNavController().navigate(R.id.favouriteFragment)
+        }
+        binding.searchView.setOnQueryTextListener(this)
     }
 
     override fun setupObservers() {
@@ -89,7 +95,13 @@ class SearchFragment : BaseFragment<FragmentSearchBinding>(FragmentSearchBinding
                 binding.vendorShimmerView.startShimmer()
             }
             is  Resource.Success -> {
-                resource.data?.let { adapter?.submitList(it) }
+                resource.data?.let {
+                    binding.searchView.setOnQueryTextListener(null)
+                    binding.searchView.setQuery("", false)
+                    binding.searchView.clearFocus()
+                    binding.searchView.setOnQueryTextListener(this)
+                    adapter?.submitList(it)
+                }
                 binding.vendorShimmerView.stopShimmer()
                 binding.gridView.isVisible = true
                 binding.vendorShimmerView.isVisible = false
@@ -126,7 +138,7 @@ class SearchFragment : BaseFragment<FragmentSearchBinding>(FragmentSearchBinding
     }
 
     private fun setFilterIcon(categoryType: String, minPrice: Float, maxPrice: Float) {
-        binding.categoryChip.text = categoryType.replaceFirstChar(Char::titlecase)
+        binding.categoryChip.text = getString(UtilityFunctions.getType(categoryType))
         if(minPrice != 0f || maxPrice != viewModel.filterMaxPrice) {
             binding.priceChip.isVisible = true
             binding.priceChip.text = "${minPrice.toInt()} ₼ - ${maxPrice.toInt()} ₼"
@@ -136,5 +148,19 @@ class SearchFragment : BaseFragment<FragmentSearchBinding>(FragmentSearchBinding
         }
         binding.categoryChip.isCloseIconVisible = categoryType != Category.ALL.value
         binding.redDot.isVisible = categoryType != Category.ALL.value || minPrice != 0f || maxPrice != viewModel.filterMaxPrice
+    }
+
+    override fun onQueryTextSubmit(query: String?): Boolean {
+        return false
+    }
+
+    override fun onQueryTextChange(newText: String?): Boolean {
+        adapter?.filter?.filter(newText)
+        return false
+    }
+
+    override fun onDestroyView() {
+        binding.searchView.setOnQueryTextListener(null)
+        super.onDestroyView()
     }
 }

@@ -44,6 +44,9 @@
         <action
             android:id="@+id/action_moreFragment_to_contactUsFragment"
             app:destination="@id/contactUsFragment" />
+        <action
+            android:id="@+id/action_moreFragment_to_languageFragment"
+            app:destination="@id/languageFragment" />
     </fragment>
     <fragment
         android:id="@+id/notificationFragment"
@@ -55,5 +58,10 @@
         android:name="com.elno.wedding.presentation.more.ContactUsFragment"
         android:label="ContactUsFragment"
         tools:layout="@layout/fragment_contact_us"/>
+    <fragment
+        android:id="@+id/languageFragment"
+        android:name="com.elno.wedding.presentation.more.LanguageFragment"
+        android:label="LanguageFragment"
+        tools:layout="@layout/fragment_language"/>
 
 </navigation>

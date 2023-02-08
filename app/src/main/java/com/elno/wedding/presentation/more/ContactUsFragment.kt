@@ -2,17 +2,12 @@ package com.elno.wedding.presentation.more
 
 import android.content.ActivityNotFoundException
 import android.content.Intent
-import android.content.pm.PackageManager
 import android.net.Uri
 import androidx.core.view.isVisible
 import androidx.navigation.fragment.findNavController
 import com.elno.wedding.R
 import com.elno.wedding.databinding.FragmentContactUsBinding
 import com.elno.wedding.presentation.base.BaseFragment
-import com.elno.wedding.presentation.more.ContactUsFragment.Contants.EMAIL
-import com.elno.wedding.presentation.more.ContactUsFragment.Contants.FACEBOOK_URL
-import com.elno.wedding.presentation.more.ContactUsFragment.Contants.INSTAGRAM_ID
-import com.elno.wedding.presentation.more.ContactUsFragment.Contants.PHONE_NUMBER
 import dagger.hilt.android.AndroidEntryPoint
 
 
@@ -20,7 +15,7 @@ import dagger.hilt.android.AndroidEntryPoint
 class ContactUsFragment : BaseFragment<FragmentContactUsBinding>(FragmentContactUsBinding::inflate) {
 
     override fun setupViews() {
-        binding.facebook.icon.setImageResource(R.drawable.ic_facbook)
+        binding.facebook.icon.setImageResource(R.drawable.ic_facebook)
         binding.instagram.icon.setImageResource(R.drawable.ic_instagram)
         binding.mobile.icon.setImageResource(R.drawable.ic_phone)
         binding.email.icon.setImageResource(R.drawable.ic_mail)
@@ -32,8 +27,8 @@ class ContactUsFragment : BaseFragment<FragmentContactUsBinding>(FragmentContact
 
         binding.mobile.subTitle.isVisible = true
         binding.email.subTitle.isVisible = true
-        binding.mobile.subTitle.text = "+994502709397"
-        binding.email.subTitle.text = "elbrus.n95@gmail.com"
+        binding.mobile.subTitle.text = PHONE_NUMBER
+        binding.email.subTitle.text = EMAIL
     }
 
     override fun setupListeners() {
@@ -94,7 +89,7 @@ class ContactUsFragment : BaseFragment<FragmentContactUsBinding>(FragmentContact
     }
 
 
-    object Contants {
+    companion object {
        const val FACEBOOK_URL = "https://www.facebook.com/elbrusn"
        const val PHONE_NUMBER = "+994502709397"
        const val EMAIL = "elbrus.n95@gmail.com"

@@ -15,6 +15,14 @@
       },
       "oauth_client": [
         {
+          "client_id": "628003228293-mlm4v8jhtgq03arbnbtrqb78o20igj27.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.elno.wedding",
+            "certificate_hash": "ec5fd667f7e71106a1ce80dcedd1caed9aeb7201"
+          }
+        },
+        {
           "client_id": "628003228293-h1oscvpgpsmdimmei9qh9agip6s51mi0.apps.googleusercontent.com",
           "client_type": 3
         }

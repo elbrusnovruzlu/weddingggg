@@ -22,14 +22,14 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="24dp"
-            android:text="Suspendisse sagittis mattis. Elit sit lectu"
+            android:text="@string/onbaord_title"
             android:gravity="center"
             android:textAppearance="@style/title_1_bold_black"/>
 
         <TextView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="Volutpat quam lorem etiam  ornare in aliquam faucibus. "
+            android:text="@string/onbaord_subtitle"
             android:gravity="center"
             android:textAppearance="@style/callout_regular_gray"/>
 

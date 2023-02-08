@@ -8,38 +8,41 @@ import com.google.gson.reflect.TypeToken
 import java.lang.reflect.Type
 
 
-class LocalDataStore(context: Context?) {
+class LocalDataStore (context: Context?) {
 
+    val sharedPreferences: SharedPreferences? = context?.getSharedPreferences("dataFile", Context.MODE_PRIVATE)
+    val editor = sharedPreferences?.edit()
 
-    private val sharedPreferences: SharedPreferences? = context?.getSharedPreferences("dataFile", Context.MODE_PRIVATE)
-
-    private val editor = sharedPreferences?.edit()
-
-    fun addToList(item: VendorModel?) {
-        val currentList = getList()
+    inline fun<reified T> addToList(item: T?, key: String) {
+        val currentList = getList<T>(key)
         currentList.add(item)
-        setList(currentList)
+        setList(currentList, key)
     }
 
-    fun removeFromList(item: VendorModel?) {
-        val currentList = getList()
+    inline fun<reified T> removeFromList(item: T?, key: String) {
+        val currentList = getList<T>(key)
         currentList.remove(item)
-        setList(currentList)
+        setList(currentList, key)
     }
 
-    private fun setList(list: List<VendorModel?>) {
+    inline fun<reified T> setList(list: List<T?>, key: String) {
         val gson = Gson()
         val json = gson.toJson(list)
-        editor?.putString("myList", json)
+        editor?.putString(key, json)
         editor?.commit()
     }
 
-    fun getList(): MutableList<VendorModel?> {
-        var arrayItems: List<VendorModel> = listOf()
-        val serializedObject = sharedPreferences?.getString("myList", null)
+    fun removeList(key: String) {
+        editor?.remove(key)
+        editor?.commit()
+    }
+
+    inline fun <reified T>  getList(key: String): MutableList<T?> {
+        var arrayItems: List<T> = listOf()
+        val serializedObject = this.sharedPreferences?.getString(key, null)
         if (serializedObject != null) {
             val gson = Gson()
-            val type: Type = object : TypeToken<List<VendorModel?>?>() {}.type
+            val type: Type = object : TypeToken<List<T?>?>() {}.type
             arrayItems = gson.fromJson(serializedObject, type)
         }
         return arrayItems.toMutableList()

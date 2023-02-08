@@ -5,6 +5,7 @@ import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.GridLayoutManager
 import com.elno.wedding.R
 import com.elno.wedding.common.Constants
+import com.elno.wedding.common.Constants.FAVOURITE_LIST
 import com.elno.wedding.data.local.LocalDataStore
 import com.elno.wedding.databinding.FragmentFavouriteBinding
 import com.elno.wedding.domain.model.VendorModel
@@ -19,7 +20,7 @@ class FavouriteFragment : BaseFragment<FragmentFavouriteBinding>(FragmentFavouri
         val adapter = VendorAdapter {
             onOfferClick(it)
         }.apply {
-            submitList(LocalDataStore(context).getList())
+            submitList(LocalDataStore(context).getList(FAVOURITE_LIST))
         }
 
         binding.gridView.adapter = adapter

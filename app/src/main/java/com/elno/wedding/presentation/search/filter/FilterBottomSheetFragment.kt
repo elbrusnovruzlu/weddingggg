@@ -32,8 +32,8 @@ class FilterBottomSheetFragment(
             dismiss()
         }
 
-        binding.minPrice.label.text = "Min price"
-        binding.maxPrice.label.text = "Max price"
+        binding.minPrice.label.text = getString(R.string.min_price)
+        binding.maxPrice.label.text = getString(R.string.max_price)
 
         binding.priceSlider.addOnChangeListener { rangeSlider, value, fromUser ->
             val rangeValues = rangeSlider.values

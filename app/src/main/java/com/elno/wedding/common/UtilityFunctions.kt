@@ -2,6 +2,7 @@ package com.elno.wedding.common
 
 import android.content.Context
 import android.content.res.Resources
+import com.elno.wedding.R
 import kotlin.math.roundToInt
 
 
@@ -28,5 +29,20 @@ object UtilityFunctions {
             result = context.resources.getDimensionPixelSize(resourceId)
         }
         return result
+    }
+
+    fun getLocaleText(context: Context, map: Map<String, String>?): String? {
+        val langString: String = LocaleManager(context).getLanguage()
+        return map?.get(langString)
+    }
+
+    fun getType(type: String?): Int {
+        return when(type) {
+            "all" -> R.string.all
+            "show" -> R.string.category_dance_show
+            "decoration" -> R.string.category_decoration
+            "photography" -> R.string.category_photograph
+            else -> R.string.empty
+        }
     }
 }

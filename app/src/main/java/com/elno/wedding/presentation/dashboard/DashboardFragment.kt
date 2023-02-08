@@ -2,7 +2,6 @@ package com.elno.wedding.presentation.dashboard
 
 import android.content.Context
 import android.content.SharedPreferences
-import android.widget.LinearLayout
 import android.widget.Toast
 import androidx.constraintlayout.widget.ConstraintLayout
 import androidx.core.os.bundleOf

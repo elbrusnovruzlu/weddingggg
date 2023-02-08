@@ -3,6 +3,7 @@ package com.elno.wedding.presentation.sliderinfo
 import android.os.Bundle
 import android.view.View
 import com.bumptech.glide.Glide
+import com.elno.wedding.common.UtilityFunctions.getLocaleText
 import com.elno.wedding.databinding.FragmentSliderInfoBottomSheetBinding
 import com.elno.wedding.domain.model.SliderModel
 import com.elno.wedding.presentation.base.BaseDialogFragment
@@ -22,8 +23,8 @@ class SliderInfoBottomSheetFragment(private val sliderModel: SliderModel?) : Bas
                 Glide.with(ctx)
                     .load(model.image)
                     .into(binding.image)
-                binding.title.text = model.title
-                binding.description.text = model.description
+                binding.title.text = getLocaleText(ctx, model.title)
+                binding.description.text = getLocaleText(ctx, model.description)
             }
         }
     }

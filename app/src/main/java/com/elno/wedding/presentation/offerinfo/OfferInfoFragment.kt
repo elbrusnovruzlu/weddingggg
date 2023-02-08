@@ -1,19 +1,22 @@
 package com.elno.wedding.presentation.offerinfo
 
 import android.os.Bundle
-import android.view.*
+import android.view.View
+import android.view.ViewGroup
 import android.view.ViewGroup.MarginLayoutParams
 import androidx.core.view.isVisible
 import androidx.core.view.updateMargins
 import androidx.navigation.fragment.findNavController
 import com.bumptech.glide.Glide
 import com.elno.wedding.R
+import com.elno.wedding.common.Constants.FAVOURITE_LIST
 import com.elno.wedding.common.Constants.OFFER_MODEL
 import com.elno.wedding.common.UtilityFunctions.dpToPx
+import com.elno.wedding.common.UtilityFunctions.getType
 import com.elno.wedding.data.local.LocalDataStore
 import com.elno.wedding.databinding.FragmentOfferInfoBinding
 import com.elno.wedding.domain.model.VendorModel
-import com.elno.wedding.presentation.adapter.RouteInfoAdapter
+import com.elno.wedding.presentation.adapter.OfferInfoAdapter
 import com.elno.wedding.presentation.base.BaseFragment
 import com.google.android.material.tabs.TabLayout
 import com.google.android.material.tabs.TabLayout.OnTabSelectedListener
@@ -39,18 +42,18 @@ class OfferInfoFragment : BaseFragment<FragmentOfferInfoBinding>(FragmentOfferIn
                 .load(it)
                 .into(binding.imageView)
         }
-        binding.favButton.isChecked = LocalDataStore(context).getList().contains(vendorModel) == true
+        binding.favButton.isChecked = LocalDataStore(context).getList<VendorModel>(FAVOURITE_LIST).contains(vendorModel) == true
         binding.name.text = vendorModel?.title
-        binding.type.text = vendorModel?.type?.replaceFirstChar(Char::titlecase)
+        binding.type.text = getString(getType(vendorModel?.type))
         binding.price.text = getString(R.string.price_starts_at, vendorModel?.minPrice.toString())
 
         binding.viewPager.isUserInputEnabled = false
-        binding.viewPager.adapter = RouteInfoAdapter(this, vendorModel)
+        binding.viewPager.adapter = OfferInfoAdapter(this, vendorModel)
         TabLayoutMediator(binding.tabLayout, binding.viewPager) { tab, position ->
             tab.text = when (position) {
-                0 -> "Detail"
-                1 -> "Gallery"
-                else -> "Contact"
+                0 -> getString(R.string.vendor_detail)
+                1 -> getString(R.string.vendor_gallery)
+                else -> getString(R.string.vendor_contact)
             }
         }.attach()
 
@@ -85,10 +88,10 @@ class OfferInfoFragment : BaseFragment<FragmentOfferInfoBinding>(FragmentOfferIn
         }
         binding.favButton.setOnCheckedChangeListener { _, isChecked ->
             if(isChecked) {
-                LocalDataStore(context).addToList(vendorModel)
+                LocalDataStore(context).addToList(vendorModel, FAVOURITE_LIST)
             }
             else {
-                LocalDataStore(context).removeFromList(vendorModel)
+                LocalDataStore(context).removeFromList(vendorModel, FAVOURITE_LIST)
             }
         }
     }

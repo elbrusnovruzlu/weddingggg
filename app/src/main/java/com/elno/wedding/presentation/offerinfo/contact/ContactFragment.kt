@@ -50,6 +50,17 @@ class ContactFragment : BaseFragment<FragmentContactBinding>(FragmentContactBind
         binding.wp.title.text = getString(R.string.contact_on_whatsapp)
         binding.call.title.text = getString(R.string.call)
         binding.instagram.title.text = getString(R.string.instagram)
+
+        vendorModel?.whatsapp?.let {
+            binding.wp.subTitle.isVisible = true
+            binding.wp.subTitle.text = it
+        }
+
+        vendorModel?.mobile?.let {
+            binding.call.subTitle.isVisible = true
+            binding.call.subTitle.text = it
+        }
+
     }
 
     override fun setupListeners() {

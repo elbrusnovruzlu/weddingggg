@@ -9,7 +9,7 @@ import com.elno.wedding.presentation.offerinfo.contact.ContactFragment
 import com.elno.wedding.presentation.offerinfo.detail.OfferDetailFragment
 import com.elno.wedding.presentation.offerinfo.galllery.OfferGalleryFragment
 
-class RouteInfoAdapter(fragment: Fragment, private val vendorModel: VendorModel?): FragmentStateAdapter(fragment) {
+class OfferInfoAdapter(fragment: Fragment, private val vendorModel: VendorModel?): FragmentStateAdapter(fragment) {
     override fun getItemCount(): Int {
         return 3
     }

@@ -11,7 +11,7 @@ data class VendorModel(
     val minPrice: Long? = null,
     val type: String? = null,
     val location: Map<String, Double>? = null,
-    val description: String? = null,
+    val description: Map<String, String>? = null,
     val mobile: String? = null,
     val instagram: String? = null,
     val whatsapp: String? = null,

@@ -11,6 +11,8 @@ import androidx.cardview.widget.CardView
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import com.elno.wedding.R
+import com.elno.wedding.common.Constants.FAVOURITE_LIST
+import com.elno.wedding.common.UtilityFunctions
 import com.elno.wedding.common.UtilityFunctions.getScreenWidth
 import com.elno.wedding.data.local.LocalDataStore
 import com.elno.wedding.domain.model.VendorModel
@@ -58,21 +60,22 @@ class OfferAdapter(private val onClick: (categoryModel: VendorModel?) -> Unit): 
                     .into(imageView)
             }
             name.text = item?.title
-            type.text = item?.type
+            type.text = itemView.context.getString(UtilityFunctions.getType(item?.type))
             price.text = itemView.context.getString(R.string.price_starts_at, item?.minPrice.toString())
-            favButton.isChecked = LocalDataStore(itemView.context).getList().contains(item) == true
+            favButton.isChecked = LocalDataStore(itemView.context).getList<VendorModel>(FAVOURITE_LIST).contains(item) == true
             cardView.setOnClickListener {
                 onClick(item)
             }
             favButton.setOnCheckedChangeListener { _, isChecked ->
                 if(isChecked) {
-                    LocalDataStore(itemView.context).addToList(item)
+                    LocalDataStore(itemView.context).addToList(item, FAVOURITE_LIST)
                 }
                 else {
-                    LocalDataStore(itemView.context).removeFromList(item)
+                    LocalDataStore(itemView.context).removeFromList(item, FAVOURITE_LIST)
                 }
             }
         }
+
     }
 
 
