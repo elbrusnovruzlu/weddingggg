@@ -57,7 +57,7 @@ class MainActivity : AppCompatActivity() {
                     hideSystemUI()
                     binding.bottomNavigationView.isVisible = false
                 }
-                R.id.onboardFragment, R.id.favouriteFragment, R.id.notificationFragment, R.id.contactUsFragment, R.id.language -> {
+                R.id.onboardFragment, R.id.favouriteFragment, R.id.notificationFragment, R.id.contactUsFragment, R.id.languageFragment -> {
                     showSystemUI()
                     binding.bottomNavigationView.isVisible = false
                 }
