@@ -21,7 +21,7 @@ class SliderInfoBottomSheetFragment(private val sliderModel: SliderModel?) : Bas
         context?.let { ctx ->
             sliderModel?.let { model ->
                 Glide.with(ctx)
-                    .load(model.image)
+                    .load(getLocaleText(ctx, model.image))
                     .into(binding.image)
                 binding.title.text = getLocaleText(ctx, model.title)
                 binding.description.text = getLocaleText(ctx, model.description)

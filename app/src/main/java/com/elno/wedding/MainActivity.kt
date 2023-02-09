@@ -123,4 +123,8 @@ class MainActivity : AppCompatActivity() {
         else
             super.attachBaseContext(newBase)
     }
+
+    override fun onBackPressed() {
+        this.finish()
+    }
 }
