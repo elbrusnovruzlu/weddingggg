@@ -82,7 +82,8 @@ class MainActivity : AppCompatActivity() {
                 title = title,
                 description = description,
                 imageUrl = imageUrl,
-                vendorId = vendorId
+                vendorId = vendorId,
+                timestamp = System.currentTimeMillis()
             )
             LocalDataStore(this).addToList(notificationModel, NOTIFICATION_LIST)
             navController.navigate(R.id.notificationFragment, bundleOf(NOTIFICATION_MODEL to notificationModel))
@@ -125,6 +126,11 @@ class MainActivity : AppCompatActivity() {
     }
 
     override fun onBackPressed() {
-        this.finish()
+        if(binding.bottomNavigationView.selectedItemId == R.id.dashboardFragment) {
+            this.finish()
+        }
+        else {
+            super.onBackPressed()
+        }
     }
 }

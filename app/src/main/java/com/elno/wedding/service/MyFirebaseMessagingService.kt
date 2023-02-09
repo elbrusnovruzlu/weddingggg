@@ -11,6 +11,7 @@ import android.util.Log
 import androidx.core.app.NotificationCompat
 import com.elno.wedding.MainActivity
 import com.elno.wedding.R
+import com.elno.wedding.common.Constants
 import com.elno.wedding.common.Constants.ACTION
 import com.elno.wedding.common.Constants.DESCRIPTION
 import com.elno.wedding.common.Constants.IMAGE_URL
@@ -18,6 +19,8 @@ import com.elno.wedding.common.Constants.TITLE
 import com.elno.wedding.common.Constants.VENDOR_ID
 import com.elno.wedding.common.UtilityFunctions
 import com.elno.wedding.common.UtilityFunctions.getLocalizedTextFromJsonString
+import com.elno.wedding.data.local.LocalDataStore
+import com.elno.wedding.domain.model.NotificationModel
 import com.google.firebase.messaging.FirebaseMessagingService
 import com.google.firebase.messaging.RemoteMessage
 import com.google.gson.Gson
@@ -79,6 +82,15 @@ class MyFirebaseMessagingService : FirebaseMessagingService() {
         imageUrl: String?,
         vendorId: String?,
     ) {
+        val notificationModel = NotificationModel(
+            action = action,
+            title = title,
+            description = description,
+            imageUrl = imageUrl,
+            vendorId = vendorId,
+            timestamp = System.currentTimeMillis()
+        )
+        LocalDataStore(this).addToList(notificationModel, Constants.NOTIFICATION_LIST)
         val intent = Intent(this, MainActivity::class.java).apply {
             putExtra(ACTION, action)
             putExtra(TITLE, title)

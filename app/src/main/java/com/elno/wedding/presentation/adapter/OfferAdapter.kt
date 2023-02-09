@@ -32,7 +32,7 @@ class OfferAdapter(private val onClick: (categoryModel: VendorModel?) -> Unit): 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
         val inflater = LayoutInflater.from(parent.context)
         val view = inflater.inflate(R.layout.item_offer, parent, false)
-        view.layoutParams.width = (getScreenWidth() / 2.3f).toInt()
+        view.layoutParams.width = (getScreenWidth() / 2.5f).toInt()
         return ViewHolder(view)
     }
 

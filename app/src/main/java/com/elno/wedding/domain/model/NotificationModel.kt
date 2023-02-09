@@ -9,5 +9,6 @@ data class NotificationModel(
     val vendorId: String?,
     val title: String?,
     val description: String?,
-    val imageUrl: String?
+    val imageUrl: String?,
+    val timestamp: Long?
 ): Parcelable

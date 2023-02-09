@@ -15,8 +15,10 @@ class LocalDataStore (context: Context?) {
 
     inline fun<reified T> addToList(item: T?, key: String) {
         val currentList = getList<T>(key)
-        currentList.add(item)
-        setList(currentList, key)
+        if(currentList.contains(item).not()) {
+            currentList.add(item)
+            setList(currentList, key)
+        }
     }
 
     inline fun<reified T> removeFromList(item: T?, key: String) {
