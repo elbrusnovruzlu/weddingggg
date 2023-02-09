@@ -1,5 +1,7 @@
 package com.elno.wedding.presentation.offerinfo
 
+import android.content.Intent
+import android.net.Uri
 import android.os.Bundle
 import android.view.View
 import android.view.ViewGroup
@@ -81,7 +83,6 @@ class OfferInfoFragment : BaseFragment<FragmentOfferInfoBinding>(FragmentOfferIn
             )
         }
     }
-
     override fun setupListeners() {
         binding.backButton.setOnClickListener {
             findNavController().popBackStack()
@@ -93,6 +94,17 @@ class OfferInfoFragment : BaseFragment<FragmentOfferInfoBinding>(FragmentOfferIn
             else {
                 LocalDataStore(context).removeFromList(vendorModel, FAVOURITE_LIST)
             }
+        }
+        binding.callButton.setOnClickListener {
+            dialPhoneNumber()
+        }
+    }
+
+    private fun dialPhoneNumber() {
+        vendorModel?.mobile?.let { mobile ->
+            val dialIntent = Intent(Intent.ACTION_DIAL)
+            dialIntent.data = Uri.parse("tel:${mobile}")
+            startActivity(dialIntent)
         }
     }
 
