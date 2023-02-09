@@ -16,8 +16,11 @@ import com.elno.wedding.common.Constants.DESCRIPTION
 import com.elno.wedding.common.Constants.IMAGE_URL
 import com.elno.wedding.common.Constants.TITLE
 import com.elno.wedding.common.Constants.VENDOR_ID
+import com.elno.wedding.common.UtilityFunctions
+import com.elno.wedding.common.UtilityFunctions.getLocalizedTextFromJsonString
 import com.google.firebase.messaging.FirebaseMessagingService
 import com.google.firebase.messaging.RemoteMessage
+import com.google.gson.Gson
 
 class MyFirebaseMessagingService : FirebaseMessagingService() {
 
@@ -97,8 +100,8 @@ class MyFirebaseMessagingService : FirebaseMessagingService() {
         val defaultSoundUri = RingtoneManager.getDefaultUri(RingtoneManager.TYPE_NOTIFICATION)
         val notificationBuilder = NotificationCompat.Builder(this, channelId)
             .setSmallIcon(R.mipmap.ic_launcher)
-            .setContentTitle(title)
-            .setContentText(description)
+            .setContentTitle(getLocalizedTextFromJsonString(this, title))
+            .setContentText(getLocalizedTextFromJsonString(this, description))
             .setAutoCancel(true)
             .setSound(defaultSoundUri)
             .setContentIntent(pendingIntent)

@@ -3,6 +3,8 @@ package com.elno.wedding.common
 import android.content.Context
 import android.content.res.Resources
 import com.elno.wedding.R
+import com.google.gson.Gson
+import java.lang.Exception
 import kotlin.math.roundToInt
 
 
@@ -31,9 +33,20 @@ object UtilityFunctions {
         return result
     }
 
-    fun getLocaleText(context: Context, map: Map<String, String>?): String? {
+    fun getLocalizedTextFromJsonString(context: Context?, jsonString: String?): String? {
+        return try {
+            val gson = Gson()
+            val map: Map<String, String>? = gson.fromJson(jsonString, Map::class.java) as? Map<String, String>
+            getLocalizedTextFromMap(context, map)
+        } catch(e: Exception) {
+            context?.getString(R.string.empty)
+        }
+
+    }
+
+    fun getLocalizedTextFromMap(context: Context?, map: Map<String, String>?): String? {
         val langString: String = LocaleManager(context).getLanguage()
-        return map?.get(langString)
+        return map?.get(langString).orEmpty()
     }
 
     fun getType(type: String?): Int {

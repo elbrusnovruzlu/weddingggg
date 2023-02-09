@@ -3,7 +3,7 @@ package com.elno.wedding.presentation.offerinfo.detail
 import android.os.Bundle
 import androidx.core.text.HtmlCompat
 import com.elno.wedding.common.Constants
-import com.elno.wedding.common.UtilityFunctions.getLocaleText
+import com.elno.wedding.common.UtilityFunctions.getLocalizedTextFromMap
 import com.elno.wedding.databinding.FragmentOfferDetailBinding
 import com.elno.wedding.domain.model.VendorModel
 import com.elno.wedding.presentation.base.BaseFragment
@@ -21,7 +21,7 @@ class OfferDetailFragment : BaseFragment<FragmentOfferDetailBinding>(FragmentOff
     }
 
     override fun setupViews() {
-        getLocaleText(requireContext(), vendorModel?.description)?.let {
+        getLocalizedTextFromMap(requireContext(), vendorModel?.description)?.let {
             binding.description.text = HtmlCompat.fromHtml(it, HtmlCompat.FROM_HTML_MODE_LEGACY)
         }
     }

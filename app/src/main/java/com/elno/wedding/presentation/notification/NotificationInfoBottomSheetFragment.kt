@@ -4,10 +4,12 @@ import android.os.Bundle
 import android.view.View
 import androidx.core.view.isVisible
 import com.bumptech.glide.Glide
-import com.elno.wedding.databinding.FragmentPrivacyPolicyBottomSheetBinding
+import com.elno.wedding.common.UtilityFunctions.getLocalizedTextFromJsonString
+import com.elno.wedding.common.UtilityFunctions.getLocalizedTextFromMap
 import com.elno.wedding.databinding.NotificationInfoBottomSheetBinding
 import com.elno.wedding.domain.model.NotificationModel
 import com.elno.wedding.presentation.base.BaseDialogFragment
+import com.google.gson.Gson
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
@@ -26,8 +28,9 @@ class NotificationInfoBottomSheetFragment(
         binding.close.setOnClickListener {
             dismiss()
         }
-        binding.title.text = notificationModel?.title
-        binding.description.text = notificationModel?.description
+
+        binding.title.text = getLocalizedTextFromJsonString(context, notificationModel?.title)
+        binding.description.text = getLocalizedTextFromJsonString(context, notificationModel?.description)
         binding.actionButton.isVisible = (notificationModel?.action == NotificationAction.OPEN_VENDOR.value)
         notificationModel?.imageUrl?.let {
             Glide.with(requireContext())

@@ -9,7 +9,7 @@ import androidx.viewpager.widget.PagerAdapter
 import androidx.viewpager.widget.ViewPager
 import com.bumptech.glide.Glide
 import com.elno.wedding.R
-import com.elno.wedding.common.UtilityFunctions.getLocaleText
+import com.elno.wedding.common.UtilityFunctions.getLocalizedTextFromMap
 import com.elno.wedding.domain.model.SliderModel
 
 class SliderAdapter(private val context: Context, private val onClick: (sliderModel: SliderModel?) -> Unit) : PagerAdapter() {
@@ -41,7 +41,7 @@ class SliderAdapter(private val context: Context, private val onClick: (sliderMo
         }
         item?.let {
             Glide.with(context)
-                .load(getLocaleText(context, it.image))
+                .load(getLocalizedTextFromMap(context, it.image))
                 .into(images)
         }
 
