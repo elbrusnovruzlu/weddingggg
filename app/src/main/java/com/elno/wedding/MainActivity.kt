@@ -124,13 +124,4 @@ class MainActivity : AppCompatActivity() {
         else
             super.attachBaseContext(newBase)
     }
-
-    override fun onBackPressed() {
-        if(binding.bottomNavigationView.selectedItemId == R.id.dashboardFragment) {
-            this.finish()
-        }
-        else {
-            super.onBackPressed()
-        }
-    }
 }

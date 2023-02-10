@@ -14,7 +14,7 @@ class MoreFragment : BaseFragment<FragmentMoreBinding>(FragmentMoreBinding::infl
         binding.privacyPolicy.icon.setImageResource(R.drawable.ic_privacy)
         binding.language.icon.setImageResource(R.drawable.ic_laguage)
 
-        binding.contactUs.title.text = getString(R.string.contact_us)
+        binding.contactUs.title.text = getString(R.string.vendor_contact)
         binding.privacyPolicy.title.text = getString(R.string.privacy_policy)
         binding.language.title.text = getString(R.string.app_language)
     }

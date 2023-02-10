@@ -80,7 +80,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="24dp"
-                android:text="@string/contact_info"
+                android:text="@string/offer_detail_contact"
                 android:textAppearance="@style/sub_headline_medium"
                 android:includeFontPadding="false" />
 
