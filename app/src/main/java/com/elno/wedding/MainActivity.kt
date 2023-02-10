@@ -1,12 +1,9 @@
 package com.elno.wedding
 
+import android.app.ActivityManager
 import android.content.Context
 import android.content.res.Configuration
 import android.os.Bundle
-import android.provider.ContactsContract
-import android.util.Log
-import android.view.View
-import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.os.bundleOf
 import androidx.core.splashscreen.SplashScreen.Companion.installSplashScreen
@@ -29,6 +26,7 @@ import com.elno.wedding.data.local.LocalDataStore
 import com.elno.wedding.databinding.ActivityMainBinding
 import com.elno.wedding.domain.model.NotificationModel
 import dagger.hilt.android.AndroidEntryPoint
+
 
 @AndroidEntryPoint
 class MainActivity : AppCompatActivity() {
@@ -82,8 +80,7 @@ class MainActivity : AppCompatActivity() {
                 title = title,
                 description = description,
                 imageUrl = imageUrl,
-                vendorId = vendorId,
-                timestamp = System.currentTimeMillis()
+                vendorId = vendorId
             )
             LocalDataStore(this).addToList(notificationModel, NOTIFICATION_LIST)
             navController.navigate(R.id.notificationFragment, bundleOf(NOTIFICATION_MODEL to notificationModel))

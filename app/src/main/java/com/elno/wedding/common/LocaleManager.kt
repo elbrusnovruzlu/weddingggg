@@ -17,10 +17,17 @@ class LocaleManager(context: Context?) {
     }
 
     fun getLanguage(): String {
-        var lang = Constants.LANGUAGE_KEY_AZ
+
+        var deviceLang = Locale.getDefault().language
+        if(deviceLang != Constants.LANGUAGE_KEY_AZ &&
+            deviceLang != Constants.LANGUAGE_KEY_EN &&
+            deviceLang != Constants.LANGUAGE_KEY_RU) {
+            deviceLang = Constants.LANGUAGE_KEY_AZ
+        }
+        var lang = deviceLang
 
         if (prefs?.contains("logLanguage") == true)
-            lang = prefs.getString("logLanguage", Constants.LANGUAGE_KEY_AZ) ?: Constants.LANGUAGE_KEY_AZ
+            lang = prefs.getString("logLanguage", deviceLang) ?: deviceLang
         return lang
     }
 

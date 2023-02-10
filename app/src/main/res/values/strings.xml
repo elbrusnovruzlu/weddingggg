@@ -49,4 +49,7 @@
     <string name="onbaord_subtitle">Siz tərəfdaşlara filtr tətbiq edə və özünüzə uyğun olanı tapa bilərsiniz</string>
     <string name="browse">Kəşf et</string>
     <string name="search_by_name">Ada görə axtarın</string>
+    <string name="app_icon">Tətbiq ikonu</string>
+    <string name="dayz_alpha">Dayz Alpha</string>
+    <string name="dayz_white">Dayz White</string>
 </resources>

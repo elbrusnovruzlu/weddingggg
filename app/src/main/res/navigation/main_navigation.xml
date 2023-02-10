@@ -47,6 +47,9 @@
         <action
             android:id="@+id/action_moreFragment_to_languageFragment"
             app:destination="@id/languageFragment" />
+        <action
+            android:id="@+id/action_moreFragment_to_appIconFragment"
+            app:destination="@id/appIconFragment" />
     </fragment>
     <fragment
         android:id="@+id/notificationFragment"
@@ -63,5 +66,10 @@
         android:name="com.elno.wedding.presentation.more.LanguageFragment"
         android:label="LanguageFragment"
         tools:layout="@layout/fragment_language"/>
+    <fragment
+        android:id="@+id/appIconFragment"
+        android:name="com.elno.wedding.presentation.more.AppIconFragment"
+        android:label="AppIconFragment"
+        tools:layout="@layout/fragment_app_icon"/>
 
 </navigation>

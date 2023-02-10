@@ -16,7 +16,7 @@ class LocalDataStore (context: Context?) {
     inline fun<reified T> addToList(item: T?, key: String) {
         val currentList = getList<T>(key)
         if(currentList.contains(item).not()) {
-            currentList.add(item)
+            currentList.add(0, item)
             setList(currentList, key)
         }
     }

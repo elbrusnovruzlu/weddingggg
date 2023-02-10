@@ -50,4 +50,7 @@
     <string name="onbaord_subtitle">Вы можете применить фильтр к партнерам и найти подходящего для вас</string>
     <string name="browse">Исследовать</string>
     <string name="search_by_name">Поиск по имени</string>
+    <string name="app_icon">Значок приложения</string>
+    <string name="dayz_alpha">Dayz Alpha</string>
+    <string name="dayz_white">Dayz White</string>
 </resources>

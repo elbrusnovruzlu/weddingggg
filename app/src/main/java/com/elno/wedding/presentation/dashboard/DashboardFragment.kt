@@ -3,6 +3,7 @@ package com.elno.wedding.presentation.dashboard
 import android.content.Context
 import android.content.SharedPreferences
 import android.widget.Toast
+import androidx.activity.OnBackPressedCallback
 import androidx.constraintlayout.widget.ConstraintLayout
 import androidx.core.os.bundleOf
 import androidx.core.view.isVisible
@@ -83,6 +84,13 @@ class DashboardFragment : BaseFragment<FragmentDashboardBinding>(FragmentDashboa
         binding.notification.setOnClickListener {
             findNavController().navigate(R.id.notificationFragment)
         }
+
+        requireActivity().onBackPressedDispatcher.addCallback(viewLifecycleOwner, object : OnBackPressedCallback(true) {
+                override fun handleOnBackPressed() {
+                    activity?.finish()
+                }
+            }
+        )
     }
 
     private fun initLottie() {

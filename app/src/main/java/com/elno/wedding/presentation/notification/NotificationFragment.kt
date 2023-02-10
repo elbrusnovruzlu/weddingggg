@@ -29,7 +29,6 @@ class NotificationFragment : BaseFragment<FragmentNotificationBinding>(FragmentN
     override fun setupViews() {
         context?.let {
             val list = LocalDataStore(it).getList<NotificationModel>(NOTIFICATION_LIST)
-            list.sortByDescending { notification -> notification?.timestamp }
             binding.delete.isVisible = list.isEmpty().not()
             adapter.submitList(list)
             binding.recyclerView.adapter = adapter
