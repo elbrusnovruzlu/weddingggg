@@ -1,6 +1,5 @@
 package com.elno.wedding
 
-import android.app.ActivityManager
 import android.content.Context
 import android.content.res.Configuration
 import android.os.Bundle
@@ -55,7 +54,7 @@ class MainActivity : AppCompatActivity() {
                     hideSystemUI()
                     binding.bottomNavigationView.isVisible = false
                 }
-                R.id.onboardFragment, R.id.favouriteFragment, R.id.notificationFragment, R.id.contactUsFragment, R.id.languageFragment -> {
+                R.id.onboardFragment, R.id.favouriteFragment, R.id.notificationFragment, R.id.contactUsFragment, R.id.languageFragment, R.id.privacyPolicyFragment -> {
                     showSystemUI()
                     binding.bottomNavigationView.isVisible = false
                 }

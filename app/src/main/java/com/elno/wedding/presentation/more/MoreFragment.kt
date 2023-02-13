@@ -26,11 +26,7 @@ class MoreFragment : BaseFragment<FragmentMoreBinding>(FragmentMoreBinding::infl
             findNavController().navigate(R.id.action_moreFragment_to_contactUsFragment)
         }
         binding.privacyPolicy.root.setOnClickListener {
-            val dialog = PrivacyPolicyBottomSheetFragment(
-                getString(R.string.privacy_policy),
-                getString(R.string.privacy_pocily)
-            )
-            dialog.show(parentFragmentManager, PrivacyPolicyBottomSheetFragment::class.java.canonicalName)
+            findNavController().navigate(R.id.action_moreFragment_to_privacyPolicyFragment)
         }
         binding.language.root.setOnClickListener {
             findNavController().navigate(R.id.action_moreFragment_to_languageFragment)
