@@ -17,7 +17,9 @@
         <entry key="app/src/main/res/drawable/ic__4794106671556282358.xml" value="0.1465" />
         <entry key="app/src/main/res/drawable/ic__802031291627121833.xml" value="0.221" />
         <entry key="app/src/main/res/drawable/ic__953692481543238867.xml" value="0.1265" />
+        <entry key="app/src/main/res/drawable/ic_appereance.xml" value="0.138" />
         <entry key="app/src/main/res/drawable/ic_arrow_right.xml" value="0.131" />
+        <entry key="app/src/main/res/drawable/ic_avatar_1_2.xml" value="0.138" />
         <entry key="app/src/main/res/drawable/ic_back.xml" value="0.1575" />
         <entry key="app/src/main/res/drawable/ic_back_transparent_background.xml" value="0.1575" />
         <entry key="app/src/main/res/drawable/ic_bike.xml" value="0.1305" />
@@ -25,6 +27,7 @@
         <entry key="app/src/main/res/drawable/ic_close_dark.xml" value="0.1065" />
         <entry key="app/src/main/res/drawable/ic_contact_us.xml" value="0.221" />
         <entry key="app/src/main/res/drawable/ic_dance_show.xml" value="0.2035" />
+        <entry key="app/src/main/res/drawable/ic_dark_mode.xml" value="0.138" />
         <entry key="app/src/main/res/drawable/ic_decoration.xml" value="0.2035" />
         <entry key="app/src/main/res/drawable/ic_delete.xml" value="0.2105" />
         <entry key="app/src/main/res/drawable/ic_facbook.xml" value="0.221" />
@@ -35,6 +38,9 @@
         <entry key="app/src/main/res/drawable/ic_home.xml" value="0.1465" />
         <entry key="app/src/main/res/drawable/ic_instagram.xml" value="0.221" />
         <entry key="app/src/main/res/drawable/ic_instagram_svgrepo_com.xml" value="0.221" />
+        <entry key="app/src/main/res/drawable/ic_laguage.xml" value="0.138" />
+        <entry key="app/src/main/res/drawable/ic_launcher_foreground.xml" value="0.138" />
+        <entry key="app/src/main/res/drawable/ic_logo.xml" value="0.138" />
         <entry key="app/src/main/res/drawable/ic_mail.xml" value="0.221" />
         <entry key="app/src/main/res/drawable/ic_manat.xml" value="0.1465" />
         <entry key="app/src/main/res/drawable/ic_more.xml" value="0.131" />
@@ -45,9 +51,12 @@
         <entry key="app/src/main/res/drawable/ic_privacy.xml" value="0.221" />
         <entry key="app/src/main/res/drawable/ic_red_dot.xml" value="0.221" />
         <entry key="app/src/main/res/drawable/ic_search.xml" value="0.1465" />
+        <entry key="app/src/main/res/drawable/ic_sticker_circle.xml" value="0.138" />
         <entry key="app/src/main/res/drawable/ic_terms.xml" value="0.221" />
         <entry key="app/src/main/res/drawable/ic_whatsapp.xml" value="0.1265" />
+        <entry key="app/src/main/res/drawable/ic_x.xml" value="0.138" />
         <entry key="app/src/main/res/drawable/info_gradient_background.xml" value="0.205" />
+        <entry key="app/src/main/res/drawable/news_avd_v02.xml" value="0.138" />
         <entry key="app/src/main/res/drawable/price_layout_background.xml" value="0.221" />
         <entry key="app/src/main/res/drawable/radio_button_icon.xml" value="0.221" />
         <entry key="app/src/main/res/drawable/radio_button_selector.xml" value="0.2105" />
@@ -67,26 +76,28 @@
         <entry key="app/src/main/res/layout/default_cell.xml" value="0.36194181580474427" />
         <entry key="app/src/main/res/layout/dialog_gallery_slider_fullscreen.xml" value="0.19579533941236069" />
         <entry key="app/src/main/res/layout/fragment_app_icon.xml" value="0.3894927536231884" />
+        <entry key="app/src/main/res/layout/fragment_appreance.xml" value="0.4415728144285057" />
         <entry key="app/src/main/res/layout/fragment_contact.xml" value="0.24399566650390628" />
         <entry key="app/src/main/res/layout/fragment_contact_us.xml" value="0.3894927536231884" />
         <entry key="app/src/main/res/layout/fragment_dashboard.xml" value="0.18563899287471064" />
         <entry key="app/src/main/res/layout/fragment_favourite.xml" value="0.14114583333333333" />
-        <entry key="app/src/main/res/layout/fragment_filter_bottom_sheet.xml" value="0.5645390070921986" />
+        <entry key="app/src/main/res/layout/fragment_filter_bottom_sheet.xml" value="0.4218181818181818" />
         <entry key="app/src/main/res/layout/fragment_language.xml" value="0.3894927536231884" />
-        <entry key="app/src/main/res/layout/fragment_more.xml" value="0.203125" />
+        <entry key="app/src/main/res/layout/fragment_more.xml" value="0.36393890380859384" />
         <entry key="app/src/main/res/layout/fragment_notification.xml" value="0.25" />
         <entry key="app/src/main/res/layout/fragment_offer_bottom_sheet.xml" value="0.29280223619846263" />
         <entry key="app/src/main/res/layout/fragment_offer_detail.xml" value="0.18076923076923077" />
         <entry key="app/src/main/res/layout/fragment_offer_gallery.xml" value="0.1" />
         <entry key="app/src/main/res/layout/fragment_offer_info.xml" value="0.1" />
         <entry key="app/src/main/res/layout/fragment_onboard.xml" value="0.17704191346099413" />
+        <entry key="app/src/main/res/layout/fragment_privacy_policy.xml" value="0.21822916666666667" />
         <entry key="app/src/main/res/layout/fragment_privacy_policy_bottom_sheet.xml" value="0.20208333333333334" />
         <entry key="app/src/main/res/layout/fragment_search.xml" value="0.3514801551555764" />
         <entry key="app/src/main/res/layout/fragment_serach.xml" value="0.3745471014492754" />
         <entry key="app/src/main/res/layout/fragment_slider_info_bottom_sheet.xml" value="0.20534086365630663" />
         <entry key="app/src/main/res/layout/fragment_station_detail.xml" value="0.203125" />
         <entry key="app/src/main/res/layout/fragment_station_list.xml" value="0.203125" />
-        <entry key="app/src/main/res/layout/item_category.xml" value="0.4814147949218749" />
+        <entry key="app/src/main/res/layout/item_category.xml" value="0.25525817871093737" />
         <entry key="app/src/main/res/layout/item_gallery.xml" value="0.19630192502532928" />
         <entry key="app/src/main/res/layout/item_offer.xml" value="0.36789309853001645" />
         <entry key="app/src/main/res/layout/item_slider.xml" value="0.21706927168391743" />

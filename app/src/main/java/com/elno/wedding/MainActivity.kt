@@ -4,6 +4,7 @@ import android.content.Context
 import android.content.res.Configuration
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
+import androidx.appcompat.app.AppCompatDelegate
 import androidx.core.os.bundleOf
 import androidx.core.splashscreen.SplashScreen.Companion.installSplashScreen
 import androidx.core.view.WindowCompat
@@ -48,6 +49,7 @@ class MainActivity : AppCompatActivity() {
         }
         setContentView(binding.root)
         setupWithNavController(binding.bottomNavigationView, navController)
+        setNightMode()
         navController.addOnDestinationChangedListener { _, destination, _ ->
              when(destination.id) {
                 R.id.offerInfoFragment -> {
@@ -55,16 +57,24 @@ class MainActivity : AppCompatActivity() {
                     binding.bottomNavigationView.isVisible = false
                 }
                 R.id.onboardFragment, R.id.favouriteFragment, R.id.notificationFragment, R.id.contactUsFragment, R.id.languageFragment, R.id.privacyPolicyFragment -> {
-                    showSystemUI()
+                    if(checkIfNightMode()) showSystemUIOnNightMode() else showSystemUI()
                     binding.bottomNavigationView.isVisible = false
                 }
                 else -> {
-                    showSystemUI()
+                    if(checkIfNightMode()) showSystemUIOnNightMode() else showSystemUI()
                     binding.bottomNavigationView.isVisible = true
                 }
             }
         }
         handleNotification()
+    }
+
+    private fun setNightMode() {
+        if (checkIfNightMode()) {
+            AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_YES)
+        } else {
+            AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_NO)
+        }
     }
 
     private fun handleNotification() {
@@ -93,11 +103,6 @@ class MainActivity : AppCompatActivity() {
         WindowInsetsControllerCompat(window, binding.root).hide(WindowInsetsCompat.Type.ime())
     }
 
-    fun changeColorOfStatusBar(colorResId: Int, isAppearanceLightStatusBars: Boolean) {
-        window.statusBarColor = getColor(colorResId)
-        WindowCompat.getInsetsController(window, binding.root).isAppearanceLightStatusBars = isAppearanceLightStatusBars
-    }
-
     private fun showSystemUI() {
         window.statusBarColor = getColor(R.color.background)
         WindowCompat.getInsetsController(window, binding.root).isAppearanceLightStatusBars = true
@@ -105,8 +110,34 @@ class MainActivity : AppCompatActivity() {
         WindowInsetsControllerCompat(window, binding.root).show(WindowInsetsCompat.Type.systemBars())
     }
 
+    private fun showSystemUIOnNightMode() {
+        window.statusBarColor = getColor(R.color.background)
+        WindowCompat.getInsetsController(window, binding.root).isAppearanceLightStatusBars = false
+        WindowCompat.setDecorFitsSystemWindows(window, true)
+        WindowInsetsControllerCompat(window, binding.root).show(WindowInsetsCompat.Type.systemBars())
+    }
+
     fun navigateTo(searchFragment: Int) {
         binding.bottomNavigationView.selectedItemId = searchFragment
+    }
+
+    fun checkIfNightMode(): Boolean {
+        val sharedPref = getSharedPreferences("sharedFile", Context.MODE_PRIVATE)
+        return if(sharedPref.contains("isDarkModeActive")) {
+            sharedPref.getBoolean("isDarkModeActive", false)
+        }
+        else {
+            when (resources.configuration.uiMode and Configuration.UI_MODE_NIGHT_MASK) {
+                Configuration.UI_MODE_NIGHT_YES -> {
+                    sharedPref.edit().putBoolean("isDarkModeActive", true).apply()
+                    true
+                }
+                else -> {
+                    sharedPref.edit().putBoolean("isDarkModeActive", false).apply()
+                    false
+                }
+            }
+        }
     }
 
     override fun onConfigurationChanged(newConfig: Configuration) {

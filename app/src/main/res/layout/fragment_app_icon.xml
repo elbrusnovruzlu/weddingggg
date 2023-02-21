@@ -10,6 +10,7 @@
         android:layout_width="match_parent"
         android:layout_height="?attr/actionBarSize"
         app:navigationIcon="@drawable/ic_back"
+        app:navigationIconTint="@color/text_black"
         android:background="@color/transparent"
         android:elevation="0dp"
         app:layout_constraintTop_toTopOf="parent"
@@ -47,7 +48,7 @@
             android:button="@drawable/radio_button_icon"
             android:paddingVertical="12dp"
             android:drawablePadding="12dp"
-            android:drawableEnd="@drawable/flag_az"/>
+            android:drawableEnd="@mipmap/ic_launcher"/>
 
         <View
             android:layout_width="match_parent"
@@ -55,15 +56,15 @@
             android:background="@color/background"/>
 
         <RadioButton
-            android:id="@+id/dayzAlpha"
+            android:id="@+id/dayzBlack"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="@string/dayz_alpha"
+            android:text="@string/dayz_black"
             android:layoutDirection="rtl"
             android:button="@drawable/radio_button_icon"
             android:paddingVertical="12dp"
             android:drawablePadding="12dp"
-            android:drawableEnd="@drawable/flag_en"/>
+            android:drawableEnd="@mipmap/ic_second_launcher"/>
 
         <View
             android:layout_width="match_parent"
@@ -79,7 +80,7 @@
             android:button="@drawable/radio_button_icon"
             android:paddingVertical="12dp"
             android:drawablePadding="12dp"
-            android:drawableEnd="@drawable/flag_ru"/>
+            android:drawableEnd="@mipmap/ic_white_launcher"/>
 
     </RadioGroup>
 

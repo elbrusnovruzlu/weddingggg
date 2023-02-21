@@ -138,6 +138,7 @@
             android:layout_marginHorizontal="20dp"
             android:theme="@style/AppTheme.ActiveButton"
             android:textAppearance="@style/callout_medium_white"
+            android:textColor="@color/white"
             android:layout_marginBottom="40dp"
             app:layout_constraintBottom_toBottomOf="parent" />
 

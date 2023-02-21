@@ -50,6 +50,9 @@
     <string name="browse">Explore</string>
     <string name="search_by_name">Search by name</string>
     <string name="app_icon">App icon</string>
-    <string name="dayz_alpha">Dayz Alpha</string>
+    <string name="dayz_black">Dayz Black</string>
     <string name="dayz_white">Dayz White</string>
+    <string name="appearance">Görünüş</string>
+    <string name="dark_mode">Dark mode</string>
+    <string name="light_mode">Light mode</string>
 </resources>

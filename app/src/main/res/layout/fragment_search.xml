@@ -96,6 +96,7 @@
             android:layout_marginStart="8dp"
             app:closeIconEnabled="true"
             app:closeIcon="@drawable/ic_x"
+            app:closeIconTint="@color/brandColor"
             android:textAppearance="@style/caption_medium_brand" />
 
     </LinearLayout>

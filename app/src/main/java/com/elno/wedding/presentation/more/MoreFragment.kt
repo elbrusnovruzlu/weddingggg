@@ -14,11 +14,14 @@ class MoreFragment : BaseFragment<FragmentMoreBinding>(FragmentMoreBinding::infl
         binding.privacyPolicy.icon.setImageResource(R.drawable.ic_privacy)
         binding.language.icon.setImageResource(R.drawable.ic_laguage)
         binding.appIcon.icon.setImageResource(R.drawable.ic_sticker_circle)
+        binding.appearance.icon.setImageResource(R.drawable.ic_appereance)
+
 
         binding.contactUs.title.text = getString(R.string.vendor_contact)
         binding.privacyPolicy.title.text = getString(R.string.privacy_policy)
         binding.language.title.text = getString(R.string.app_language)
         binding.appIcon.title.text = getString(R.string.app_icon)
+        binding.appearance.title.text = getString(R.string.appearance)
     }
 
     override fun setupListeners() {
@@ -33,6 +36,9 @@ class MoreFragment : BaseFragment<FragmentMoreBinding>(FragmentMoreBinding::infl
         }
         binding.appIcon.root.setOnClickListener {
             findNavController().navigate(R.id.action_moreFragment_to_appIconFragment)
+        }
+        binding.appearance.root.setOnClickListener {
+            findNavController().navigate(R.id.action_moreFragment_to_appearanceFragment)
         }
     }
 

@@ -53,6 +53,9 @@
         <action
             android:id="@+id/action_moreFragment_to_privacyPolicyFragment"
             app:destination="@id/privacyPolicyFragment" />
+        <action
+            android:id="@+id/action_moreFragment_to_appearanceFragment"
+            app:destination="@id/appearanceFragment" />
     </fragment>
     <fragment
         android:id="@+id/notificationFragment"
@@ -79,5 +82,10 @@
         android:name="com.elno.wedding.presentation.more.policy.PrivacyPolicyFragment"
         android:label="PrivacyPolicyFragment"
         tools:layout="@layout/fragment_privacy_policy"/>
+    <fragment
+        android:id="@+id/appearanceFragment"
+        android:name="com.elno.wedding.presentation.more.AppearanceFragment"
+        android:label="AppearanceFragment"
+        tools:layout="@layout/fragment_appreance"/>
 
 </navigation>

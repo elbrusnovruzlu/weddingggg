@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <color name="brandColor">#4D2ADD</color>
+    <color name="brandColorDark">#321B8F</color>
+    <color name="brandColorLight">#3D3C1DBA</color>
+    <color name="background">#000000</color>
+    <color name="cell_color">#111112</color>
+    <color name="text_black">#ffffff</color>
+    <color name="text_black_50">#808080</color>
+    <color name="text_white">#000000</color>
+    <color name="text_white_50">#80FFFFFF</color>
+    <color name="transparent">#00FFFFFF</color>
+    <color name="icon">#BABABF</color>
+    <color name="shimmer_background">#dddddd</color>
+    <color name="transparent_80">#CC000000</color>
+    <color name="transparent_50">#80000000</color>
+    <color name="transparent_30">#4D000000</color>
+    <color name="gallery_background">#111112</color>
+    <color name="white">#FFFFFF</color>
+    <color name="black">#000000</color>
+</resources>
