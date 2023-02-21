@@ -164,7 +164,7 @@
             android:text="@string/clear_filter"
             android:theme="@style/AppTheme.SecondaryButton"
             android:textAppearance="@style/callout_medium_white"
-            android:textColor="@color/white"
+            android:textColor="@color/buttonTextColor"
             android:layout_marginBottom="16dp"
             app:layout_constraintBottom_toBottomOf="parent" />
 
