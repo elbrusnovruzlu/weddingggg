@@ -6,12 +6,14 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.ImageView
 import android.widget.TextView
+import androidx.core.content.ContextCompat
 import androidx.core.view.isVisible
 import androidx.recyclerview.widget.RecyclerView
 import com.elno.wedding.R
 import com.elno.wedding.common.UtilityFunctions.convertDate
 import com.elno.wedding.common.UtilityFunctions.getLocalizedTextFromMap
 import com.elno.wedding.domain.model.NotificationModel
+import com.elno.wedding.presentation.notification.NotificationAction
 
 
 class NotificationAdapter(
@@ -48,7 +50,13 @@ class NotificationAdapter(
         private val subTitle: TextView = view.findViewById(R.id.subTitle)
 
         fun bind(item: NotificationModel?, onClick: (notificationModel: NotificationModel?) -> Unit) {
-            icon.isVisible = false
+            val iconResId = when (item?.action) {
+                NotificationAction.OPEN_VENDOR.value -> R.drawable.notification_partner
+                NotificationAction.NEW_CATEGORY.value -> R.drawable.notification_category
+                else -> R.drawable.notification_info
+            }
+            icon.setImageResource(iconResId)
+            icon.setColorFilter(ContextCompat.getColor(itemView.context, R.color.brandColor), android.graphics.PorterDuff.Mode.SRC_IN)
             subTitle.isVisible = true
             title.text = getLocalizedTextFromMap(itemView.context, item?.title)
             item?.time?.let { subTitle.text =  convertDate(itemView.context, it) }

@@ -44,7 +44,7 @@ class OfferInfoFragment : BaseFragment<FragmentOfferInfoBinding>(FragmentOfferIn
                 .load(it)
                 .into(binding.imageView)
         }
-        binding.favButton.isChecked = LocalDataStore(context).getList<VendorModel>(FAVOURITE_LIST).contains(vendorModel) == true
+        binding.favButton.isChecked = LocalDataStore(context).getList<String>(FAVOURITE_LIST).contains(vendorModel?.id) == true
         binding.name.text = vendorModel?.title
         binding.type.text = getType(context, vendorModel?.type)
         binding.price.text = getString(R.string.price_starts_at, vendorModel?.minPrice.toString())
@@ -89,10 +89,10 @@ class OfferInfoFragment : BaseFragment<FragmentOfferInfoBinding>(FragmentOfferIn
         }
         binding.favButton.setOnCheckedChangeListener { _, isChecked ->
             if(isChecked) {
-                LocalDataStore(context).addToList(vendorModel, FAVOURITE_LIST)
+                LocalDataStore(context).addToList(vendorModel?.id, FAVOURITE_LIST)
             }
             else {
-                LocalDataStore(context).removeFromList(vendorModel, FAVOURITE_LIST)
+                LocalDataStore(context).removeFromList(vendorModel?.id, FAVOURITE_LIST)
             }
         }
         binding.callButton.setOnClickListener {

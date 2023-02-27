@@ -35,8 +35,8 @@ class FilterBottomSheetFragment(
 
         binding.priceSlider.addOnChangeListener { rangeSlider, value, fromUser ->
             val rangeValues = rangeSlider.values
-            binding.minPrice.value.text = "${rangeValues[0]} ₼"
-            binding.maxPrice.value.text = "${rangeValues[1]} ₼"
+            binding.minPrice.value.text = "${rangeValues[0].toInt()} ₼"
+            binding.maxPrice.value.text = "${rangeValues[1].toInt()} ₼"
         }
 
         binding.priceSlider.setValues(minPrice.toFloat(), maxPrice.toFloat())

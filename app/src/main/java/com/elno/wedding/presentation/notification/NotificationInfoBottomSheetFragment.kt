@@ -30,7 +30,7 @@ class NotificationInfoBottomSheetFragment(
         binding.title.text = getLocalizedTextFromMap(context, notificationModel?.title)
         binding.description.text = getLocalizedTextFromMap(context, notificationModel?.subtitle)
         notificationModel?.time?.let { binding.time.text = UtilityFunctions.convertDate(context, it) }
-        binding.actionButton.isVisible = (notificationModel?.action != NotificationAction.INFO.value)
+        binding.actionButton.isVisible = (notificationModel?.action == NotificationAction.OPEN_VENDOR.value || notificationModel?.action == NotificationAction.NEW_CATEGORY.value)
         binding.actionButton.setOnClickListener {
             onClick(notificationModel?.action, notificationModel?.actionId)
             dismiss()

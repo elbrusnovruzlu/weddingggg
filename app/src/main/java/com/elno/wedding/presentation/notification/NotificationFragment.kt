@@ -51,6 +51,9 @@ class NotificationFragment : BaseFragment<FragmentNotificationBinding>(FragmentN
                 .setPositiveButton(R.string.yes) { _, _ ->
                     val sharedPref: SharedPreferences? = context?.getSharedPreferences("sharedFile", Context.MODE_PRIVATE)
                     sharedPref?.edit()?.putLong("deleteTime", System.currentTimeMillis())?.apply()
+                    binding.emptyLayout.isVisible = true
+                    binding.recyclerView.isVisible = false
+                    binding.delete.isVisible = false
                     adapter.submitList(mutableListOf())
                 }
                 .setNegativeButton(R.string.no) { _, _ -> }
@@ -76,9 +79,17 @@ class NotificationFragment : BaseFragment<FragmentNotificationBinding>(FragmentN
             }
             is  Resource.Success -> {
                 binding.loading.isVisible = false
-                resource.data?.let {
-                    adapter.submitList(it)
-                    checkNotification(it)
+                if(resource.data.isNullOrEmpty()) {
+                    binding.emptyLayout.isVisible = true
+                    binding.recyclerView.isVisible = false
+                    binding.delete.isVisible = false
+                }
+                else {
+                    binding.emptyLayout.isVisible = false
+                    binding.recyclerView.isVisible = true
+                    binding.delete.isVisible = true
+                    adapter.submitList(resource.data)
+                    checkNotification(resource.data)
                 }
             }
             is  Resource.Error -> {

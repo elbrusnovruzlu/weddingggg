@@ -34,8 +34,67 @@
         app:layout_constraintBottom_toBottomOf="parent"
         android:clipToPadding="false"
         android:paddingHorizontal="16dp"
+        android:visibility="gone"
         android:numColumns="2"
+        android:layout_marginTop="8dp"
         android:verticalSpacing="8dp" />
+
+    <LinearLayout
+        android:id="@+id/emptyLayout"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:layout_marginTop="8dp"
+        android:layout_marginHorizontal="20dp"
+        android:gravity="center"
+        android:visibility="gone"
+        android:paddingVertical="24dp"
+        android:paddingHorizontal="16dp"
+        android:background="@drawable/text_view_background"
+        app:layout_constraintTop_toBottomOf="@+id/toolbar">
+
+        <ImageView
+            android:layout_width="96dp"
+            android:layout_height="96dp"
+            android:src="@drawable/no_favourite" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/no_favourites"
+            android:gravity="center"
+            android:textAppearance="@style/body_semi_bold" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/no_favourite_description"
+            android:gravity="center"
+            android:textAppearance="@style/sub_headline_regular_gray" />
+
+        <com.google.android.material.button.MaterialButton
+            android:id="@+id/addBtn"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/add"
+            android:theme="@style/AppTheme.ActiveButton"
+            android:textAppearance="@style/callout_medium_white"
+            android:textColor="@color/white"
+            android:layout_marginTop="8dp"
+            app:layout_constraintBottom_toBottomOf="parent" />
+
+    </LinearLayout>
+
+    <ProgressBar
+        android:id="@+id/loading"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:visibility="gone"
+        android:indeterminateTint="@color/brandColor"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"/>
 
 
 

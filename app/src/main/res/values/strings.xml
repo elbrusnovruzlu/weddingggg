@@ -55,4 +55,11 @@
     <string name="dark_mode">Dark mode</string>
     <string name="light_mode">Light mode</string>
     <string name="default_mode">System default</string>
+    <string name="no_notifications">Sizin bildirişiniz yoxdur</string>
+    <string name="no_favourites">Sizin seçilmiş partnyorunuz yoxdur</string>
+    <string name="no_notification_description">Siz yeni kateqoriyalar, partnyorlar və digər məlumat haqqında bildirişləri burada görəcəksiniz</string>
+    <string name="no_favourite_description">Siz yeni partnyor əlavə etmək üçün “Kəşf et” səhifəsinə keçid edə bilərsiniz</string>
+    <string name="add">Əlavə et</string>
+    <string name="no_search_result">Seçdiyiniz filterlərə uyğun partnyor tapılmadı</string>
+    <string name="no_search_result_description">Yeni filter tətbiq elə</string>
 </resources>

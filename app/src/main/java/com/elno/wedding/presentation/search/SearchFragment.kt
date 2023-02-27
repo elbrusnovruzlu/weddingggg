@@ -39,9 +39,10 @@ class SearchFragment : BaseFragment<FragmentSearchBinding>(FragmentSearchBinding
     }
 
     override fun setupViews() {
-        adapter = VendorAdapter() {
-            onOfferClick(it)
-        }
+        adapter = VendorAdapter(
+            { onOfferClick(it) },
+            { onEmptyResult(it) },
+        )
         binding.gridView.adapter = adapter
         binding.gridView.layoutManager = GridLayoutManager(context, 2)
         binding.categoryChip.text = UtilityFunctions.getType(context, viewModel.categoryType)
@@ -49,6 +50,10 @@ class SearchFragment : BaseFragment<FragmentSearchBinding>(FragmentSearchBinding
         binding.redDot.isVisible = viewModel.categoryType != "all"
         viewModel.getVendorList()
         viewModel.getFilterMaxPrice()
+    }
+
+    private fun onEmptyResult(isEmpty: Boolean) {
+        binding.emptyLayout.isVisible = isEmpty
     }
 
     override fun setupListeners() {
@@ -67,12 +72,14 @@ class SearchFragment : BaseFragment<FragmentSearchBinding>(FragmentSearchBinding
         binding.categoryChip.setOnCloseIconClickListener {
             viewModel.categoryType = "all"
             setFilterIcon(viewModel.categoryType, viewModel.minPrice, viewModel.maxPrice)
+            binding.emptyLayout.isVisible = false
             viewModel.getVendorList()
         }
         binding.priceChip.setOnCloseIconClickListener {
             viewModel.minPrice = 0L
             viewModel.maxPrice = filterModel.maxPrice
             setFilterIcon(viewModel.categoryType, viewModel.minPrice, viewModel.maxPrice)
+            binding.emptyLayout.isVisible = false
             viewModel.getVendorList()
         }
         binding.favourite.setOnClickListener {
@@ -104,13 +111,12 @@ class SearchFragment : BaseFragment<FragmentSearchBinding>(FragmentSearchBinding
                 binding.vendorShimmerView.startShimmer()
             }
             is  Resource.Success -> {
-                resource.data?.let {
-                    binding.searchView.setOnQueryTextListener(null)
-                    binding.searchView.setQuery("", false)
-                    binding.searchView.clearFocus()
-                    binding.searchView.setOnQueryTextListener(this)
-                    adapter?.submitList(it)
-                }
+                binding.emptyLayout.isVisible = resource.data.isNullOrEmpty()
+                binding.searchView.setOnQueryTextListener(null)
+                binding.searchView.setQuery("", false)
+                binding.searchView.clearFocus()
+                binding.searchView.setOnQueryTextListener(this)
+                adapter?.submitList(resource.data?: mutableListOf())
                 binding.vendorShimmerView.stopShimmer()
                 binding.gridView.isVisible = true
                 binding.vendorShimmerView.isVisible = false
@@ -143,6 +149,7 @@ class SearchFragment : BaseFragment<FragmentSearchBinding>(FragmentSearchBinding
         viewModel.categoryType = categoryType
         viewModel.minPrice = minPrice
         viewModel.maxPrice = maxPrice
+        binding.emptyLayout.isVisible = false
         viewModel.getVendorList()
     }
 

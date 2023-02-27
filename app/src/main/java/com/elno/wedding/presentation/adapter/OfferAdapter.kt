@@ -62,16 +62,16 @@ class OfferAdapter(private val onClick: (categoryModel: VendorModel?) -> Unit): 
             name.text = item?.title
             type.text = UtilityFunctions.getType(itemView.context, item?.type)
             price.text = itemView.context.getString(R.string.price_starts_at, item?.minPrice.toString())
-            favButton.isChecked = LocalDataStore(itemView.context).getList<VendorModel>(FAVOURITE_LIST).contains(item) == true
+            favButton.isChecked = LocalDataStore(itemView.context).getList<String>(FAVOURITE_LIST).contains(item?.id) == true
             cardView.setOnClickListener {
                 onClick(item)
             }
             favButton.setOnCheckedChangeListener { _, isChecked ->
                 if(isChecked) {
-                    LocalDataStore(itemView.context).addToList(item, FAVOURITE_LIST)
+                    LocalDataStore(itemView.context).addToList(item?.id, FAVOURITE_LIST)
                 }
                 else {
-                    LocalDataStore(itemView.context).removeFromList(item, FAVOURITE_LIST)
+                    LocalDataStore(itemView.context).removeFromList(item?.id, FAVOURITE_LIST)
                 }
             }
         }

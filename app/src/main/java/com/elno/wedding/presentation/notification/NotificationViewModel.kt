@@ -29,6 +29,7 @@ class NotificationViewModel @Inject constructor(
                 val notificationModel = documentSnapshot.toObject(NotificationModel::class.java)
                 notificationList.add(notificationModel)
             }
+            notificationList.reverse()
             _notificationListResult.value = Resource.Success(notificationList)
         }.addOnFailureListener{
             _notificationListResult.value = Resource.Error("Error while loading")

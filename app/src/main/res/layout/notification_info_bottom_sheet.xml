@@ -71,7 +71,6 @@
             android:layout_height="wrap_content"
             style="@style/AppTheme.ButtonWithoutInset"
             android:text="@string/open_vendor_info"
-            android:layout_marginHorizontal="20dp"
             android:theme="@style/AppTheme.ActiveButton"
             android:textAppearance="@style/callout_medium_white"
             android:textColor="@color/white"

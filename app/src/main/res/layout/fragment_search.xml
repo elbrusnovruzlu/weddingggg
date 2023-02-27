@@ -227,4 +227,39 @@
         android:numColumns="2"
         android:verticalSpacing="8dp" />
 
+    <LinearLayout
+        android:id="@+id/emptyLayout"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:layout_marginTop="8dp"
+        android:layout_marginHorizontal="20dp"
+        android:gravity="center"
+        android:visibility="gone"
+        android:paddingVertical="24dp"
+        android:paddingHorizontal="16dp"
+        android:background="@drawable/text_view_background"
+        app:layout_constraintTop_toBottomOf="@+id/filterLayout">
+
+        <ImageView
+            android:layout_width="96dp"
+            android:layout_height="96dp"
+            android:src="@drawable/no_favourite" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/no_search_result"
+            android:gravity="center"
+            android:textAppearance="@style/body_semi_bold" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/no_search_result_description"
+            android:gravity="center"
+            android:textAppearance="@style/sub_headline_regular_gray" />
+
+    </LinearLayout>
+
 </androidx.constraintlayout.widget.ConstraintLayout>

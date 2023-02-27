@@ -16,7 +16,8 @@ import com.elno.wedding.data.local.LocalDataStore
 import com.elno.wedding.domain.model.VendorModel
 
 class VendorAdapter(
-    private val onClick: (item: VendorModel?) -> Unit
+    private val onClick: (item: VendorModel?) -> Unit,
+    private val onEmptyResult: (isEmpty: Boolean) -> Unit
 ) :  RecyclerView.Adapter<VendorAdapter.ViewHolder>(), Filterable {
 
     private var list = mutableListOf<VendorModel?>()
@@ -61,16 +62,16 @@ class VendorAdapter(
             name.text = item?.title
             type.text =UtilityFunctions.getType( itemView.context, item?.type)
             price.text = itemView.context.getString(R.string.price_starts_at, item?.minPrice.toString())
-            favButton.isChecked = LocalDataStore(itemView.context).getList<VendorModel>(FAVOURITE_LIST).contains(item) == true
+            favButton.isChecked = LocalDataStore(itemView.context).getList<String>(FAVOURITE_LIST).contains(item?.id) == true
             cardView.setOnClickListener {
                 onClick(item)
             }
             favButton.setOnCheckedChangeListener { _, isChecked ->
                 if(isChecked) {
-                    LocalDataStore(itemView.context).addToList(item, FAVOURITE_LIST)
+                    LocalDataStore(itemView.context).addToList(item?.id, FAVOURITE_LIST)
                 }
                 else {
-                    LocalDataStore(itemView.context).removeFromList(item, FAVOURITE_LIST)
+                    LocalDataStore(itemView.context).removeFromList(item?.id, FAVOURITE_LIST)
                 }
             }
         }
@@ -98,9 +99,9 @@ class VendorAdapter(
             @Suppress("UNCHECKED_CAST")
             override fun publishResults(constraint: CharSequence?, results: FilterResults?) {
                 filterList = results?.values as ArrayList<VendorModel?>
+                onEmptyResult(filterList.isEmpty())
                 notifyDataSetChanged()
             }
-
         }
     }
 
