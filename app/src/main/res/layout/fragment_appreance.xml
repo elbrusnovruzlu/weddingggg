@@ -40,6 +40,22 @@
         app:layout_constraintTop_toBottomOf="@+id/toolbar">
 
         <RadioButton
+            android:id="@+id/lightMode"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="@string/light_mode"
+            android:layoutDirection="rtl"
+            android:button="@drawable/radio_button_icon"
+            android:paddingVertical="12dp"
+            android:drawablePadding="12dp"
+            android:drawableEnd="@drawable/ic_light_mode"/>
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:background="@color/background"/>
+
+        <RadioButton
             android:id="@+id/darkMode"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -50,21 +66,22 @@
             android:drawablePadding="12dp"
             android:drawableEnd="@drawable/ic_dark_mode"/>
 
+
         <View
             android:layout_width="match_parent"
             android:layout_height="1dp"
             android:background="@color/background"/>
 
         <RadioButton
-            android:id="@+id/lightMode"
+            android:id="@+id/defaultMode"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="@string/light_mode"
+            android:text="@string/default_mode"
             android:layoutDirection="rtl"
             android:button="@drawable/radio_button_icon"
             android:paddingVertical="12dp"
             android:drawablePadding="12dp"
-            android:drawableEnd="@drawable/ic_light_mode"/>
+            android:drawableEnd="@drawable/ic_default_mode"/>
 
     </RadioGroup>
 

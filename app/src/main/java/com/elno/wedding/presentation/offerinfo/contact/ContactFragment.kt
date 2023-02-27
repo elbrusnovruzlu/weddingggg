@@ -47,18 +47,18 @@ class ContactFragment : BaseFragment<FragmentContactBinding>(FragmentContactBind
         binding.wp.icon.setImageResource(R.drawable.ic_whatsapp)
         binding.call.icon.setImageResource(R.drawable.ic_phone)
         binding.instagram.icon.setImageResource(R.drawable.ic_instagram)
-        binding.wp.title.text = getString(R.string.contact_on_whatsapp)
-        binding.call.title.text = getString(R.string.call)
+        binding.wp.subTitle.text = getString(R.string.contact_on_whatsapp)
+        binding.call.subTitle.text = getString(R.string.call)
+        binding.wp.subTitle.isVisible = true
+        binding.call.subTitle.isVisible = true
         binding.instagram.title.text = getString(R.string.instagram)
 
         vendorModel?.whatsapp?.let {
-            binding.wp.subTitle.isVisible = true
-            binding.wp.subTitle.text = it
+            binding.wp.title.text = it
         }
 
         vendorModel?.mobile?.let {
-            binding.call.subTitle.isVisible = true
-            binding.call.subTitle.text = it
+            binding.call.title.text = it
         }
 
     }

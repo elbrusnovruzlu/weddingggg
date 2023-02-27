@@ -59,7 +59,7 @@ class VendorAdapter(
                     .into(imageView)
             }
             name.text = item?.title
-            type.text = itemView.context.getString(UtilityFunctions.getType(item?.type))
+            type.text =UtilityFunctions.getType( itemView.context, item?.type)
             price.text = itemView.context.getString(R.string.price_starts_at, item?.minPrice.toString())
             favButton.isChecked = LocalDataStore(itemView.context).getList<VendorModel>(FAVOURITE_LIST).contains(item) == true
             cardView.setOnClickListener {

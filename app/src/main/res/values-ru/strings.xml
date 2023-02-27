@@ -55,4 +55,5 @@
     <string name="appearance">Görünüş</string>
     <string name="dark_mode">Dark mode</string>
     <string name="light_mode">Light mode</string>
+    <string name="default_mode">System default</string>
 </resources>

@@ -5,6 +5,8 @@ import android.content.SharedPreferences
 import androidx.lifecycle.ViewModel
 import com.elno.wedding.common.Resource
 import com.elno.wedding.common.SingleLiveData
+import com.elno.wedding.common.Static
+import com.elno.wedding.domain.model.CategoryModel
 import com.elno.wedding.domain.model.VendorModel
 import com.elno.wedding.domain.model.SliderModel
 import com.google.firebase.firestore.FirebaseFirestore
@@ -19,34 +21,43 @@ class DashboardViewModel @Inject constructor(
     private val _sliderListResult: SingleLiveData<Resource<ArrayList<SliderModel?>>> = SingleLiveData()
     val sliderListResult: SingleLiveData<Resource<ArrayList<SliderModel?>>> = _sliderListResult
 
-    private val _filterMaxPriceResult: SingleLiveData<Long> = SingleLiveData()
-    val filterMaxPriceResult: SingleLiveData<Long> = _filterMaxPriceResult
-
     private val _popularListResult: SingleLiveData<Resource<ArrayList<VendorModel?>>> = SingleLiveData()
     val popularListResult: SingleLiveData<Resource<ArrayList<VendorModel?>>> = _popularListResult
+
+    private val _categoryListResult: SingleLiveData<Resource<ArrayList<CategoryModel?>>> = SingleLiveData()
+    val categoryListResult: SingleLiveData<Resource<ArrayList<CategoryModel?>>> = _categoryListResult
 
     fun getSliderList() {
         _sliderListResult.value = Resource.Loading()
         databaseReference.collection("slider").get().addOnSuccessListener { result ->
             val sliderList = arrayListOf<SliderModel?>()
-            var filterMaxPrice = 0L
-            for ((index, documentSnapshot) in result.withIndex()) {
-                if(index == result.size()-1) {
-                    filterMaxPrice = documentSnapshot.data["filterMaxPrice"] as Long
-                }
-                else {
-                    val sliderModel = documentSnapshot.toObject(SliderModel::class.java)
-                    sliderList.add(sliderModel)
-                }
+            for (documentSnapshot in result) {
+                val sliderModel = documentSnapshot.toObject(SliderModel::class.java)
+                sliderList.add(sliderModel)
             }
-            _filterMaxPriceResult.value = filterMaxPrice
             _sliderListResult.value = Resource.Success(sliderList)
         }.addOnFailureListener{
             _sliderListResult.value = Resource.Error("Error while loading")
         }
     }
 
-    fun getPopularOfferList() {
+    fun getCategoryList() {
+        _categoryListResult.value = Resource.Loading()
+        databaseReference.collection("categories").get().addOnSuccessListener { result ->
+            val categoryList = arrayListOf<CategoryModel?>()
+            for (documentSnapshot in result) {
+                val categoryModel = documentSnapshot.toObject(CategoryModel::class.java)
+                categoryList.add(categoryModel)
+            }
+            Static.filterModel.categories = categoryList
+            getPopularOfferList()
+            _categoryListResult.value = Resource.Success(categoryList)
+        }.addOnFailureListener{
+            _categoryListResult.value = Resource.Error("Error while loading")
+        }
+    }
+
+    private fun getPopularOfferList() {
         _popularListResult.value = Resource.Loading()
         databaseReference.collection("vendors").whereEqualTo("isPopular", true).get().addOnSuccessListener { result ->
             val offerList = arrayListOf<VendorModel?>()
@@ -54,6 +65,7 @@ class DashboardViewModel @Inject constructor(
                 val offerModel = documentSnapshot.toObject(VendorModel::class.java)
                 offerList.add(offerModel)
             }
+            offerList.sortBy {it?.order}
             _popularListResult.value = Resource.Success(offerList)
         }.addOnFailureListener{
             _popularListResult.value = Resource.Error("Error while loading")

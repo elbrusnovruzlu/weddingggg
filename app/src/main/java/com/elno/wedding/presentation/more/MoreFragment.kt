@@ -1,5 +1,6 @@
 package com.elno.wedding.presentation.more
 
+import androidx.core.content.ContextCompat
 import androidx.navigation.fragment.findNavController
 import com.elno.wedding.R
 import com.elno.wedding.databinding.FragmentMoreBinding
@@ -15,6 +16,15 @@ class MoreFragment : BaseFragment<FragmentMoreBinding>(FragmentMoreBinding::infl
         binding.language.icon.setImageResource(R.drawable.ic_laguage)
         binding.appIcon.icon.setImageResource(R.drawable.ic_sticker_circle)
         binding.appearance.icon.setImageResource(R.drawable.ic_appereance)
+
+        context?.let {
+            binding.contactUs.icon.setColorFilter(ContextCompat.getColor(it, R.color.brandColor), android.graphics.PorterDuff.Mode.SRC_IN)
+            binding.privacyPolicy.icon.setColorFilter(ContextCompat.getColor(it, R.color.brandColor), android.graphics.PorterDuff.Mode.SRC_IN)
+            binding.language.icon.setColorFilter(ContextCompat.getColor(it, R.color.brandColor), android.graphics.PorterDuff.Mode.SRC_IN)
+            binding.appIcon.icon.setColorFilter(ContextCompat.getColor(it, R.color.brandColor), android.graphics.PorterDuff.Mode.SRC_IN)
+            binding.appearance.icon.setColorFilter(ContextCompat.getColor(it, R.color.brandColor), android.graphics.PorterDuff.Mode.SRC_IN)
+        }
+
 
 
         binding.contactUs.title.text = getString(R.string.vendor_contact)

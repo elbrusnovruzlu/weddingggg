@@ -8,18 +8,20 @@ import android.widget.ImageView
 import android.widget.TextView
 import androidx.cardview.widget.CardView
 import androidx.recyclerview.widget.RecyclerView
+import com.bumptech.glide.Glide
 import com.elno.wedding.R
 import com.elno.wedding.common.UtilityFunctions.dpToPx
+import com.elno.wedding.common.UtilityFunctions.getLocalizedTextFromMap
 import com.elno.wedding.common.UtilityFunctions.getScreenWidth
 import com.elno.wedding.domain.model.CategoryModel
 
 
-class CategoryAdapter(private val onClick: (categoryModel: CategoryModel) -> Unit): RecyclerView.Adapter<CategoryAdapter.ViewHolder>() {
+class CategoryAdapter(private val onClick: (categoryModel: CategoryModel?) -> Unit): RecyclerView.Adapter<CategoryAdapter.ViewHolder>() {
 
-    private val list = arrayListOf<CategoryModel>()
+    private val list = arrayListOf<CategoryModel?>()
 
     @SuppressLint("NotifyDataSetChanged")
-    fun submitList(newList: ArrayList<CategoryModel>) {
+    fun submitList(newList: ArrayList<CategoryModel?>) {
         list.clear()
         list.addAll(newList)
         notifyDataSetChanged()
@@ -46,9 +48,13 @@ class CategoryAdapter(private val onClick: (categoryModel: CategoryModel) -> Uni
         private val categoryName: TextView = view.findViewById(R.id.categoryName)
         private val cardView: CardView = view.findViewById(R.id.cardView)
 
-        fun bind(item: CategoryModel, onClick: (categoryModel: CategoryModel) -> Unit) {
-            imageView.setImageResource(item.imageResId)
-            categoryName.text = itemView.context.getString(item.titleResId)
+        fun bind(item: CategoryModel?, onClick: (categoryModel: CategoryModel?) -> Unit) {
+            item?.icon.let {
+                Glide.with(itemView.context)
+                    .load(it)
+                    .into(imageView)
+            }
+            categoryName.text = getLocalizedTextFromMap(itemView.context, item?.name)
             cardView.setOnClickListener {
                 onClick(item)
             }

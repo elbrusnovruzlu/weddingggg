@@ -48,60 +48,24 @@
             android:includeFontPadding="false"
             android:textAppearance="@style/sub_headline_semi_bold"/>
 
-        <RadioGroup
-            android:id="@+id/radioGroup"
+        <com.google.android.material.chip.ChipGroup
+            android:id="@+id/chipGroup"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="12dp"
             android:orientation="horizontal"
+            app:singleSelection="true"
             app:layout_constraintTop_toBottomOf="@+id/categoryTextView">
 
-            <RadioButton
-                android:id="@+id/decorationRadioButton"
-                android:layout_width="wrap_content"
-                android:layout_height="32dp"
-                android:button="@color/transparent"
-                android:paddingHorizontal="12dp"
-                android:textAppearance="@style/caption_medium_gray"
-                android:includeFontPadding="false"
-                android:background="@drawable/radio_button_selector"
-                android:textColor="@color/radio_button_text_color"
-                android:text="@string/category_decoration" />
 
-            <RadioButton
-                android:id="@+id/photographyRadioButton"
-                android:layout_width="wrap_content"
-                android:layout_height="32dp"
-                android:button="@color/transparent"
-                android:paddingHorizontal="12dp"
-                android:textAppearance="@style/caption_medium_gray"
-                android:includeFontPadding="false"
-                android:layout_marginStart="8dp"
-                android:background="@drawable/radio_button_selector"
-                android:textColor="@color/radio_button_text_color"
-                android:text="@string/category_photograph" />
-
-            <RadioButton
-                android:id="@+id/showRadioButton"
-                android:layout_width="wrap_content"
-                android:layout_height="32dp"
-                android:button="@color/transparent"
-                android:paddingHorizontal="12dp"
-                android:textAppearance="@style/caption_medium_gray"
-                android:includeFontPadding="false"
-                android:layout_marginStart="8dp"
-                android:background="@drawable/radio_button_selector"
-                android:textColor="@color/radio_button_text_color"
-                android:text="@string/category_dance_show" />
-
-        </RadioGroup>
+        </com.google.android.material.chip.ChipGroup>
 
         <TextView
             android:id="@+id/priceTextView"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="@string/price_interval"
-            app:layout_constraintTop_toBottomOf="@+id/radioGroup"
+            app:layout_constraintTop_toBottomOf="@+id/chipGroup"
             app:layout_constraintStart_toStartOf="parent"
             android:layout_marginTop="28dp"
             android:includeFontPadding="false"

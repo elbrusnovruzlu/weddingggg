@@ -15,5 +15,7 @@ data class VendorModel(
     val mobile: String? = null,
     val instagram: String? = null,
     val whatsapp: String? = null,
-    val images: ArrayList<String>? = null
+    val images: ArrayList<String>? = null,
+    val isPopular: Boolean? = null,
+    val order: Int? = null,
 ): Parcelable

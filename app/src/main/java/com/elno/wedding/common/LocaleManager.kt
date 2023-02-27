@@ -71,9 +71,9 @@ class LocaleManager(context: Context?) {
      * @param res
      * @return
      */
-    fun getLocale(res: Resources): Locale? {
-        val config: Configuration = res.configuration
-        return if (Build.VERSION.SDK_INT >= 24) config.locales[0] else config.locale
+    fun getLocale(res: Resources?): Locale? {
+        val config: Configuration? = res?.configuration
+        return if (Build.VERSION.SDK_INT >= 24) config?.locales?.get(0) else config?.locale
     }
 
 }

@@ -1,26 +1,24 @@
 package com.elno.wedding.presentation.search.filter
 
 import android.os.Bundle
-import android.util.Log
 import android.view.View
-import com.bumptech.glide.Glide
+import android.view.View.NO_ID
 import com.elno.wedding.R
+import com.elno.wedding.common.Static.filterModel
+import com.elno.wedding.common.UtilityFunctions.getLocalizedTextFromMap
 import com.elno.wedding.databinding.FragmentFilterBottomSheetBinding
-import com.elno.wedding.databinding.FragmentSliderInfoBottomSheetBinding
-import com.elno.wedding.domain.model.SliderModel
+import com.elno.wedding.domain.model.CategoryModel
 import com.elno.wedding.presentation.base.BaseDialogFragment
+import com.google.android.material.chip.Chip
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
 class FilterBottomSheetFragment(
-    private val categoryType: String,
-    private val minPrice: Float,
-    private val maxPrice: Float,
-    private val filterMaxPrice: Float,
-    private val onClick: (categoryType: String, minPrice: Float, maxPrice: Float) -> Unit
+    private var categoryType: String,
+    private val minPrice: Long,
+    private val maxPrice: Long,
+    private val onClick: (categoryType: String, minPrice: Long, maxPrice: Long) -> Unit
     ) : BaseDialogFragment<FragmentFilterBottomSheetBinding>(FragmentFilterBottomSheetBinding::inflate) {
-
-    private var type = Category.ALL.value
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
@@ -37,39 +35,42 @@ class FilterBottomSheetFragment(
 
         binding.priceSlider.addOnChangeListener { rangeSlider, value, fromUser ->
             val rangeValues = rangeSlider.values
-            binding.minPrice.value.text = "${rangeValues[0].toInt()} ₼"
-            binding.maxPrice.value.text = "${rangeValues[1].toInt()} ₼"
+            binding.minPrice.value.text = "${rangeValues[0]} ₼"
+            binding.maxPrice.value.text = "${rangeValues[1]} ₼"
         }
 
-        binding.priceSlider.setValues(minPrice, maxPrice)
-        binding.priceSlider.valueTo = filterMaxPrice
-        binding.minPrice.value.text = "${minPrice.toInt()} ₼"
-        binding.maxPrice.value.text = "${maxPrice.toInt()} ₼"
+        binding.priceSlider.setValues(minPrice.toFloat(), maxPrice.toFloat())
+        binding.priceSlider.valueTo = filterModel.maxPrice.toFloat()
+        binding.minPrice.value.text = "$minPrice ₼"
+        binding.maxPrice.value.text = "$maxPrice ₼"
 
-        binding.radioGroup.setOnCheckedChangeListener { _, checkedId ->
-            type = when(checkedId) {
-                R.id.decorationRadioButton -> Category.DECORATION.value
-                R.id.photographyRadioButton -> Category.PHOTOGRAPHY.value
-                R.id.showRadioButton -> Category.SHOW.value
-                else -> Category.ALL.value
-            }
-        }
-
-        when (categoryType) {
-            Category.DECORATION.value -> binding.decorationRadioButton.isChecked = true
-            Category.PHOTOGRAPHY.value -> binding.photographyRadioButton.isChecked = true
-            Category.SHOW.value -> binding.showRadioButton.isChecked = true
+        filterModel.categories?.forEach {
+            addToChipGroup(it)
         }
 
         binding.filterBtn.setOnClickListener {
-            onClick(type, binding.priceSlider.values[0], binding.priceSlider.values[1])
+            val chipId = binding.chipGroup.checkedChipId
+            val type = if(chipId == NO_ID) {
+                "all"
+            } else {
+                val chip: Chip = binding.chipGroup.findViewById(chipId)
+                chip.tag as String
+            }
+            onClick(type, binding.priceSlider.values[0].toLong(), binding.priceSlider.values[1].toLong())
             dismiss()
         }
         binding.clearFilterBtn.setOnClickListener {
-            onClick(Category.ALL.value, 0f, filterMaxPrice)
+            onClick("all", 0, filterModel.maxPrice)
             dismiss()
         }
+    }
 
+    private fun addToChipGroup(categoryModel: CategoryModel?) {
+        val chip = layoutInflater.inflate(R.layout.chip_item, binding.chipGroup, false) as Chip
+        chip.text = getLocalizedTextFromMap(context, categoryModel?.name)
+        chip.isChecked = categoryType == categoryModel?.type
+        chip.tag = categoryModel?.type
+        binding.chipGroup.addView(chip)
     }
 
 }

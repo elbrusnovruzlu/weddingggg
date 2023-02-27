@@ -14,10 +14,16 @@ import dagger.hilt.android.AndroidEntryPoint
 class AppearanceFragment : BaseFragment<FragmentAppreanceBinding>(FragmentAppreanceBinding::inflate) {
 
     override fun setupViews() {
-        val checkButton = when((activity as? MainActivity)?.checkIfNightMode()) {
-            true -> R.id.darkMode
-            else -> R.id.lightMode
+        val checkButton = if(checkIfNightModeSet()) {
+            when((activity as? MainActivity)?.checkIfNightMode()) {
+                true -> R.id.darkMode
+                else -> R.id.lightMode
+            }
         }
+        else {
+           R.id.defaultMode
+        }
+
         binding.radioButton.check(checkButton)
     }
 
@@ -36,11 +42,22 @@ class AppearanceFragment : BaseFragment<FragmentAppreanceBinding>(FragmentApprea
                     sharedPref?.edit()?.putBoolean("isDarkModeActive", false)?.apply()
                     (activity as MainActivity).navigateTo(R.id.dashboardFragment)
                 }
+                R.id.defaultMode -> {
+                    AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_FOLLOW_SYSTEM);
+                    val sharedPref = activity?.getSharedPreferences("sharedFile", Context.MODE_PRIVATE)
+                    sharedPref?.edit()?.remove("isDarkModeActive")?.apply()
+                    (activity as MainActivity).navigateTo(R.id.dashboardFragment)
+                }
             }
         }
         binding.toolbar.setNavigationOnClickListener {
             findNavController().popBackStack()
         }
+    }
+
+    private fun checkIfNightModeSet(): Boolean {
+        val sharedPref = activity?.getSharedPreferences("sharedFile", Context.MODE_PRIVATE)
+        return sharedPref?.contains("isDarkModeActive") == true
     }
 
 }

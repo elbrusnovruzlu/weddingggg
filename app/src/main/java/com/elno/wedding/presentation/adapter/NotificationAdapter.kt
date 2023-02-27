@@ -6,14 +6,11 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.ImageView
 import android.widget.TextView
-import androidx.cardview.widget.CardView
 import androidx.core.view.isVisible
 import androidx.recyclerview.widget.RecyclerView
 import com.elno.wedding.R
-import com.elno.wedding.common.UtilityFunctions.dpToPx
-import com.elno.wedding.common.UtilityFunctions.getLocalizedTextFromJsonString
-import com.elno.wedding.common.UtilityFunctions.getScreenWidth
-import com.elno.wedding.domain.model.CategoryModel
+import com.elno.wedding.common.UtilityFunctions.convertDate
+import com.elno.wedding.common.UtilityFunctions.getLocalizedTextFromMap
 import com.elno.wedding.domain.model.NotificationModel
 
 
@@ -53,8 +50,8 @@ class NotificationAdapter(
         fun bind(item: NotificationModel?, onClick: (notificationModel: NotificationModel?) -> Unit) {
             icon.isVisible = false
             subTitle.isVisible = true
-            title.text = getLocalizedTextFromJsonString(itemView.context, item?.title)
-            subTitle.text = getLocalizedTextFromJsonString(itemView.context, item?.description)
+            title.text = getLocalizedTextFromMap(itemView.context, item?.title)
+            item?.time?.let { subTitle.text =  convertDate(itemView.context, it) }
             itemView.setOnClickListener {
                 onClick(item)
             }

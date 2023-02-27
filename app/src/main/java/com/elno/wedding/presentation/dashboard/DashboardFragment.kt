@@ -13,7 +13,6 @@ import androidx.navigation.fragment.findNavController
 import com.elno.wedding.MainActivity
 import com.elno.wedding.R
 import com.elno.wedding.common.Constants.CATEGORY_TYPE
-import com.elno.wedding.common.Constants.FILTER_MAX_PRICE
 import com.elno.wedding.common.Constants.OFFER_MODEL
 import com.elno.wedding.common.Resource
 import com.elno.wedding.common.UtilityFunctions.dpToPx
@@ -26,7 +25,6 @@ import com.elno.wedding.presentation.adapter.CategoryAdapter
 import com.elno.wedding.presentation.adapter.OfferAdapter
 import com.elno.wedding.presentation.adapter.SliderAdapter
 import com.elno.wedding.presentation.base.BaseFragment
-import com.elno.wedding.presentation.search.filter.Category
 import com.elno.wedding.presentation.sliderinfo.SliderInfoBottomSheetFragment
 import dagger.hilt.android.AndroidEntryPoint
 import java.util.ArrayList
@@ -47,12 +45,6 @@ class DashboardFragment : BaseFragment<FragmentDashboardBinding>(FragmentDashboa
                 height = (getScreenWidth() - dpToPx(it, 40))/2
             }
 
-            val categoryList = arrayListOf(
-                CategoryModel(R.string.category_decoration, R.drawable.ic_decoration, Category.DECORATION),
-                CategoryModel(R.string.category_photograph, R.drawable.ic_photograph, Category.PHOTOGRAPHY),
-                CategoryModel(R.string.category_dance_show, R.drawable.ic_dance_show, Category.SHOW),
-            )
-
             viewPagerAdapter = SliderAdapter(it) { model ->
                 onSlideClick(model)
             }
@@ -65,14 +57,11 @@ class DashboardFragment : BaseFragment<FragmentDashboardBinding>(FragmentDashboa
 
             categoryAdapter = CategoryAdapter { model ->
                 onCategoryClick(model)
-            }.apply {
-                submitList(categoryList)
             }
             binding.categoriesRecyclerView.adapter = categoryAdapter
 
             viewModel.getSliderList()
-            viewModel.getPopularOfferList()
-
+            viewModel.getCategoryList()
             initLottie()
         }
     }
@@ -98,15 +87,14 @@ class DashboardFragment : BaseFragment<FragmentDashboardBinding>(FragmentDashboa
         val isOnboardShowed = sharedPref?.getBoolean("isOnboardShowed", false)
         if(isOnboardShowed == false) {
             binding.animationView.playAnimation()
-            val sharedPrefEditor = activity?.getSharedPreferences("sharedFile", Context.MODE_PRIVATE)?.edit()
-            sharedPrefEditor?.putBoolean("isOnboardShowed", true)
-            sharedPrefEditor?.apply()
+            sharedPref.edit()?.putBoolean("isOnboardShowed", true)?.apply()
+            sharedPref.edit()?.putLong("deleteTime", System.currentTimeMillis())?.apply()
         }
     }
 
-    private fun onCategoryClick(model: CategoryModel) {
+    private fun onCategoryClick(model: CategoryModel?) {
         val sharedPreferences: SharedPreferences? = context?.getSharedPreferences("sharedFile", Context.MODE_PRIVATE)
-        sharedPreferences?.edit()?.putString(CATEGORY_TYPE, model.category.value)?.apply()
+        sharedPreferences?.edit()?.putString(CATEGORY_TYPE, model?.type)?.apply()
         (activity as MainActivity).navigateTo(R.id.searchFragment)
     }
 
@@ -126,9 +114,9 @@ class DashboardFragment : BaseFragment<FragmentDashboardBinding>(FragmentDashboa
             viewLifecycleOwner,
             ::consumeSliderListResult
         )
-        viewModel.filterMaxPriceResult.observe(
+        viewModel.categoryListResult.observe(
             viewLifecycleOwner,
-            ::consumeFilterMaxPriceResult
+            ::consumeCategoryListResult
         )
         viewModel.popularListResult.observe(
             viewLifecycleOwner,
@@ -136,9 +124,20 @@ class DashboardFragment : BaseFragment<FragmentDashboardBinding>(FragmentDashboa
         )
     }
 
-    private fun consumeFilterMaxPriceResult(filterMaxPrice: Long?) {
-        val sharedPreferences: SharedPreferences? = context?.getSharedPreferences("sharedFile", Context.MODE_PRIVATE)
-        sharedPreferences?.edit()?.putLong(FILTER_MAX_PRICE, filterMaxPrice?:20000)?.apply()
+    private fun consumeCategoryListResult(resource: Resource<ArrayList<CategoryModel?>>) {
+        when(resource) {
+            is  Resource.Loading -> {
+                binding.categoryShimmerView.startShimmer()
+            }
+            is  Resource.Success -> {
+                resource.data?.let { categoryAdapter?.submitList(it) }
+                binding.categoryShimmerView.stopShimmer()
+                binding.categoryShimmerView.isVisible = false
+            }
+            is  Resource.Error -> {
+                Toast.makeText(context, resource.message, Toast.LENGTH_SHORT).show()
+            }
+        }
     }
 
     private fun consumePopularOfferListResult(resource: Resource<ArrayList<VendorModel?>>) {

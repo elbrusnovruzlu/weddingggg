@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <color name="brandColor">#4D2ADD</color>
+    <color name="brandColor">#6846F2</color>
     <color name="brandColorDark">#321B8F</color>
-    <color name="brandColorLight">#3D3C1DBA</color>
+    <color name="brandColorLight">#3D6846F2</color>
     <color name="background">#000000</color>
     <color name="cell_color">#111112</color>
     <color name="text_black">#ffffff</color>

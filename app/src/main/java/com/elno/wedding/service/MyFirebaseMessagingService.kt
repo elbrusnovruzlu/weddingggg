@@ -11,15 +11,7 @@ import android.util.Log
 import androidx.core.app.NotificationCompat
 import com.elno.wedding.MainActivity
 import com.elno.wedding.R
-import com.elno.wedding.common.Constants
-import com.elno.wedding.common.Constants.ACTION
-import com.elno.wedding.common.Constants.DESCRIPTION
-import com.elno.wedding.common.Constants.IMAGE_URL
-import com.elno.wedding.common.Constants.TITLE
-import com.elno.wedding.common.Constants.VENDOR_ID
-import com.elno.wedding.common.UtilityFunctions.getLocalizedTextFromJsonString
-import com.elno.wedding.data.local.LocalDataStore
-import com.elno.wedding.domain.model.NotificationModel
+import com.elno.wedding.common.Constants.NOTIFICATION_ID
 import com.google.firebase.messaging.FirebaseMessagingService
 import com.google.firebase.messaging.RemoteMessage
 
@@ -27,24 +19,8 @@ class MyFirebaseMessagingService : FirebaseMessagingService() {
 
     // [START receive_message]
     override fun onMessageReceived(remoteMessage: RemoteMessage) {
-        // TODO(developer): Handle FCM messages here.
-        // Not getting messages here? See why this may be: https://goo.gl/39bRNJ
         Log.d(TAG, "From: ${remoteMessage.from}")
-
-        // Check if message contains a data payload.
-        if (remoteMessage.data.isNotEmpty()) {
-            val data = remoteMessage.data
-            Log.d(TAG, "Message data payload: ${remoteMessage.data}")
-            sendNotification(data[ACTION], data[TITLE], data[DESCRIPTION], data[IMAGE_URL], data[VENDOR_ID])
-        }
-
-        // Check if message contains a notification payload.
-        remoteMessage.notification?.let {
-            Log.d(TAG, "Message Notification Body: ${it.body}")
-        }
-
-        // Also if you intend on generating your own notifications as a result of a received FCM
-        // message, here is where that should be initiated. See sendNotification method below.
+        sendNotification(remoteMessage.notification?.title, remoteMessage.notification?.body, remoteMessage.data[NOTIFICATION_ID])
     }
     // [END receive_message]
 
@@ -74,26 +50,13 @@ class MyFirebaseMessagingService : FirebaseMessagingService() {
     }
 
     private fun sendNotification(
-        action: String?,
         title: String?,
         description: String?,
-        imageUrl: String?,
-        vendorId: String?,
+        actionId: String?,
     ) {
-        val notificationModel = NotificationModel(
-            action = action,
-            title = title,
-            description = description,
-            imageUrl = imageUrl,
-            vendorId = vendorId
-        )
-        LocalDataStore(this).addToList(notificationModel, Constants.NOTIFICATION_LIST)
+
         val intent = Intent(this, MainActivity::class.java).apply {
-            putExtra(ACTION, action)
-            putExtra(TITLE, title)
-            putExtra(DESCRIPTION, description)
-            putExtra(IMAGE_URL, imageUrl)
-            putExtra(VENDOR_ID, vendorId)
+            putExtra(NOTIFICATION_ID, actionId)
         }
         intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP)
         val pendingIntent = PendingIntent.getActivity(
@@ -109,8 +72,8 @@ class MyFirebaseMessagingService : FirebaseMessagingService() {
         val defaultSoundUri = RingtoneManager.getDefaultUri(RingtoneManager.TYPE_NOTIFICATION)
         val notificationBuilder = NotificationCompat.Builder(this, channelId)
             .setSmallIcon(R.mipmap.ic_launcher)
-            .setContentTitle(getLocalizedTextFromJsonString(this, title))
-            .setContentText(getLocalizedTextFromJsonString(this, description))
+            .setContentTitle(title)
+            .setContentText(description)
             .setAutoCancel(true)
             .setSound(defaultSoundUri)
             .setContentIntent(pendingIntent)

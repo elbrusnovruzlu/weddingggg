@@ -5,6 +5,7 @@ import android.content.res.Configuration
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.app.AppCompatDelegate
+import androidx.core.content.ContextCompat
 import androidx.core.os.bundleOf
 import androidx.core.splashscreen.SplashScreen.Companion.installSplashScreen
 import androidx.core.view.WindowCompat
@@ -14,17 +15,9 @@ import androidx.core.view.isVisible
 import androidx.navigation.NavController
 import androidx.navigation.fragment.NavHostFragment
 import androidx.navigation.ui.NavigationUI.setupWithNavController
-import com.elno.wedding.common.Constants.ACTION
-import com.elno.wedding.common.Constants.DESCRIPTION
-import com.elno.wedding.common.Constants.IMAGE_URL
-import com.elno.wedding.common.Constants.NOTIFICATION_LIST
-import com.elno.wedding.common.Constants.NOTIFICATION_MODEL
-import com.elno.wedding.common.Constants.TITLE
-import com.elno.wedding.common.Constants.VENDOR_ID
+import com.elno.wedding.common.Constants.NOTIFICATION_ID
 import com.elno.wedding.common.LocaleManager
-import com.elno.wedding.data.local.LocalDataStore
 import com.elno.wedding.databinding.ActivityMainBinding
-import com.elno.wedding.domain.model.NotificationModel
 import dagger.hilt.android.AndroidEntryPoint
 
 
@@ -56,7 +49,7 @@ class MainActivity : AppCompatActivity() {
                     hideSystemUI()
                     binding.bottomNavigationView.isVisible = false
                 }
-                R.id.onboardFragment, R.id.favouriteFragment, R.id.notificationFragment, R.id.contactUsFragment, R.id.languageFragment, R.id.privacyPolicyFragment -> {
+                R.id.onboardFragment, R.id.favouriteFragment, R.id.notificationFragment, R.id.contactUsFragment, R.id.languageFragment, R.id.privacyPolicyFragment, R.id.appearanceFragment -> {
                     if(checkIfNightMode()) showSystemUIOnNightMode() else showSystemUI()
                     binding.bottomNavigationView.isVisible = false
                 }
@@ -78,40 +71,28 @@ class MainActivity : AppCompatActivity() {
     }
 
     private fun handleNotification() {
-        if(intent.extras?.containsKey(ACTION) == true) {
-            val action = intent.extras?.getString(ACTION)
-            val vendorId = intent.extras?.getString(VENDOR_ID)
-            val imageUrl = intent.extras?.getString(IMAGE_URL)
-            val title = intent.extras?.getString(TITLE)
-            val description = intent.extras?.getString(DESCRIPTION)
-            val notificationModel = NotificationModel(
-                action = action,
-                title = title,
-                description = description,
-                imageUrl = imageUrl,
-                vendorId = vendorId
-            )
-            LocalDataStore(this).addToList(notificationModel, NOTIFICATION_LIST)
-            navController.navigate(R.id.notificationFragment, bundleOf(NOTIFICATION_MODEL to notificationModel))
+        if(intent.extras?.containsKey(NOTIFICATION_ID) == true) {
+            val notificationId = intent.extras?.getString(NOTIFICATION_ID)
+            navController.navigate(R.id.notificationFragment, bundleOf(NOTIFICATION_ID to notificationId))
         }
     }
 
     private fun hideSystemUI() {
-        window.statusBarColor = getColor(R.color.transparent)
+        window.statusBarColor =  ContextCompat.getColor(this, R.color.transparent)
         WindowCompat.getInsetsController(window, binding.root).isAppearanceLightStatusBars = false
         WindowCompat.setDecorFitsSystemWindows(window, false)
         WindowInsetsControllerCompat(window, binding.root).hide(WindowInsetsCompat.Type.ime())
     }
 
     private fun showSystemUI() {
-        window.statusBarColor = getColor(R.color.background)
+        window.statusBarColor = ContextCompat.getColor(this, R.color.background)
         WindowCompat.getInsetsController(window, binding.root).isAppearanceLightStatusBars = true
         WindowCompat.setDecorFitsSystemWindows(window, true)
         WindowInsetsControllerCompat(window, binding.root).show(WindowInsetsCompat.Type.systemBars())
     }
 
     private fun showSystemUIOnNightMode() {
-        window.statusBarColor = getColor(R.color.background)
+        window.statusBarColor = ContextCompat.getColor(this, R.color.background)
         WindowCompat.getInsetsController(window, binding.root).isAppearanceLightStatusBars = false
         WindowCompat.setDecorFitsSystemWindows(window, true)
         WindowInsetsControllerCompat(window, binding.root).show(WindowInsetsCompat.Type.systemBars())
@@ -129,11 +110,9 @@ class MainActivity : AppCompatActivity() {
         else {
             when (resources.configuration.uiMode and Configuration.UI_MODE_NIGHT_MASK) {
                 Configuration.UI_MODE_NIGHT_YES -> {
-                    sharedPref.edit().putBoolean("isDarkModeActive", true).apply()
                     true
                 }
                 else -> {
-                    sharedPref.edit().putBoolean("isDarkModeActive", false).apply()
                     false
                 }
             }

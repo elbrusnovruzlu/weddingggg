@@ -20,15 +20,16 @@
         app:layout_constraintTop_toTopOf="parent" />
 
     <TextView
-        android:id="@+id/title"
+        android:id="@+id/subTitle"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginHorizontal="12dp"
         android:includeFontPadding="false"
         app:layout_goneMarginStart="0dp"
         tools:text="Telefon nömrəsi"
-        android:textAppearance="@style/sub_headline_regular_black"
-        app:layout_constraintBottom_toTopOf="@+id/subTitle"
+        android:visibility="gone"
+        android:textAppearance="@style/caption_regular_gray"
+        app:layout_constraintBottom_toTopOf="@+id/title"
         app:layout_constraintEnd_toStartOf="@+id/arrow"
         app:layout_constraintHorizontal_bias="0.5"
         app:layout_constraintStart_toEndOf="@+id/icon"
@@ -36,7 +37,7 @@
         app:layout_constraintVertical_chainStyle="packed"/>
 
     <TextView
-        android:id="@+id/subTitle"
+        android:id="@+id/title"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginHorizontal="12dp"
@@ -44,13 +45,12 @@
         tools:text="+994 50 270 93 97"
         android:layout_marginTop="2dp"
         app:layout_goneMarginStart="0dp"
-        android:visibility="gone"
-        android:textAppearance="@style/caption_regular_gray"
+        android:textAppearance="@style/sub_headline_regular_black"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toStartOf="@+id/arrow"
         app:layout_constraintHorizontal_bias="0.5"
         app:layout_constraintStart_toEndOf="@+id/icon"
-        app:layout_constraintTop_toBottomOf="@+id/title"
+        app:layout_constraintTop_toBottomOf="@+id/subTitle"
         app:layout_constraintVertical_chainStyle="packed"/>
 
 

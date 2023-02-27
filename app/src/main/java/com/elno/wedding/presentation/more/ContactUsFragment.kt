@@ -22,13 +22,12 @@ class ContactUsFragment : BaseFragment<FragmentContactUsBinding>(FragmentContact
 
         binding.facebook.title.text = getString(R.string.facebook)
         binding.instagram.title.text = getString(R.string.instagram)
-        binding.mobile.title.text = getString(R.string.phone_number)
-        binding.email.title.text = getString(R.string.email)
-
+        binding.mobile.subTitle.text = getString(R.string.phone_number)
+        binding.email.subTitle.text = getString(R.string.email)
         binding.mobile.subTitle.isVisible = true
         binding.email.subTitle.isVisible = true
-        binding.mobile.subTitle.text = PHONE_NUMBER
-        binding.email.subTitle.text = EMAIL
+        binding.mobile.title.text = PHONE_NUMBER
+        binding.email.title.text = EMAIL
     }
 
     override fun setupListeners() {

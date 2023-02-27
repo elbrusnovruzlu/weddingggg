@@ -13,12 +13,12 @@ import androidx.recyclerview.widget.GridLayoutManager
 import com.elno.wedding.R
 import com.elno.wedding.common.Constants
 import com.elno.wedding.common.Resource
+import com.elno.wedding.common.Static.filterModel
 import com.elno.wedding.common.UtilityFunctions
 import com.elno.wedding.databinding.FragmentSearchBinding
 import com.elno.wedding.domain.model.VendorModel
 import com.elno.wedding.presentation.adapter.VendorAdapter
 import com.elno.wedding.presentation.base.BaseFragment
-import com.elno.wedding.presentation.search.filter.Category
 import com.elno.wedding.presentation.search.filter.FilterBottomSheetFragment
 import dagger.hilt.android.AndroidEntryPoint
 
@@ -33,11 +33,9 @@ class SearchFragment : BaseFragment<FragmentSearchBinding>(FragmentSearchBinding
         super.onCreate(savedInstanceState)
         val sharedPreferences: SharedPreferences? = context?.getSharedPreferences("sharedFile", Context.MODE_PRIVATE)
         if(sharedPreferences?.contains(Constants.CATEGORY_TYPE) == true) {
-            viewModel.categoryType = sharedPreferences.getString(Constants.CATEGORY_TYPE, Category.ALL.value) ?: Category.ALL.value
+            viewModel.categoryType = sharedPreferences.getString(Constants.CATEGORY_TYPE, "all") ?: "all"
             sharedPreferences.edit().remove(Constants.CATEGORY_TYPE).apply()
         }
-        viewModel.filterMaxPrice = sharedPreferences?.getLong(Constants.FILTER_MAX_PRICE, 20000)?.toFloat()?:20000f
-        viewModel.maxPrice = viewModel.filterMaxPrice
     }
 
     override fun setupViews() {
@@ -46,8 +44,11 @@ class SearchFragment : BaseFragment<FragmentSearchBinding>(FragmentSearchBinding
         }
         binding.gridView.adapter = adapter
         binding.gridView.layoutManager = GridLayoutManager(context, 2)
-        setFilterIcon(viewModel.categoryType, viewModel.minPrice, viewModel.maxPrice)
+        binding.categoryChip.text = UtilityFunctions.getType(context, viewModel.categoryType)
+        binding.categoryChip.isCloseIconVisible = viewModel.categoryType != "all"
+        binding.redDot.isVisible = viewModel.categoryType != "all"
         viewModel.getVendorList()
+        viewModel.getFilterMaxPrice()
     }
 
     override fun setupListeners() {
@@ -64,13 +65,13 @@ class SearchFragment : BaseFragment<FragmentSearchBinding>(FragmentSearchBinding
             openFilterDialog()
         }
         binding.categoryChip.setOnCloseIconClickListener {
-            viewModel.categoryType = Category.ALL.value
+            viewModel.categoryType = "all"
             setFilterIcon(viewModel.categoryType, viewModel.minPrice, viewModel.maxPrice)
             viewModel.getVendorList()
         }
         binding.priceChip.setOnCloseIconClickListener {
-            viewModel.minPrice = 0f
-            viewModel.maxPrice = viewModel.filterMaxPrice
+            viewModel.minPrice = 0L
+            viewModel.maxPrice = filterModel.maxPrice
             setFilterIcon(viewModel.categoryType, viewModel.minPrice, viewModel.maxPrice)
             viewModel.getVendorList()
         }
@@ -85,6 +86,14 @@ class SearchFragment : BaseFragment<FragmentSearchBinding>(FragmentSearchBinding
             viewLifecycleOwner,
             ::consumeVendorListResult
         )
+        viewModel.filterMaxPriceResult.observe(
+            viewLifecycleOwner,
+            ::consumeFilterMaxPriceResult
+        )
+    }
+
+    private fun consumeFilterMaxPriceResult(filterMaxPrice: Long?) {
+        setFilterIcon(viewModel.categoryType, viewModel.minPrice, viewModel.maxPrice)
     }
 
     private fun consumeVendorListResult(resource: Resource<ArrayList<VendorModel?>>) {
@@ -123,13 +132,13 @@ class SearchFragment : BaseFragment<FragmentSearchBinding>(FragmentSearchBinding
     }
 
     private fun openFilterDialog() {
-        val dialog = FilterBottomSheetFragment(viewModel.categoryType, viewModel.minPrice, viewModel.maxPrice, viewModel.filterMaxPrice) { categoryType, minPrice, maxPrice ->
+        val dialog = FilterBottomSheetFragment(viewModel.categoryType, viewModel.minPrice, viewModel.maxPrice) { categoryType, minPrice, maxPrice ->
             onFilterResult(categoryType, minPrice, maxPrice)
         }
         dialog.show(parentFragmentManager, FilterBottomSheetFragment::class.java.canonicalName)
     }
 
-    private fun onFilterResult(categoryType: String, minPrice: Float, maxPrice: Float) {
+    private fun onFilterResult(categoryType: String, minPrice: Long, maxPrice: Long) {
         setFilterIcon(categoryType, minPrice, maxPrice)
         viewModel.categoryType = categoryType
         viewModel.minPrice = minPrice
@@ -137,17 +146,17 @@ class SearchFragment : BaseFragment<FragmentSearchBinding>(FragmentSearchBinding
         viewModel.getVendorList()
     }
 
-    private fun setFilterIcon(categoryType: String, minPrice: Float, maxPrice: Float) {
-        binding.categoryChip.text = getString(UtilityFunctions.getType(categoryType))
-        if(minPrice != 0f || maxPrice != viewModel.filterMaxPrice) {
+    private fun setFilterIcon(categoryType: String, minPrice: Long, maxPrice: Long) {
+        binding.categoryChip.text = UtilityFunctions.getType(context, categoryType)
+        if(minPrice != 0L || maxPrice != filterModel.maxPrice) {
             binding.priceChip.isVisible = true
-            binding.priceChip.text = "${minPrice.toInt()} ₼ - ${maxPrice.toInt()} ₼"
+            binding.priceChip.text = "$minPrice ₼ - $maxPrice ₼"
         }
         else{
             binding.priceChip.isVisible = false
         }
-        binding.categoryChip.isCloseIconVisible = categoryType != Category.ALL.value
-        binding.redDot.isVisible = categoryType != Category.ALL.value || minPrice != 0f || maxPrice != viewModel.filterMaxPrice
+        binding.categoryChip.isCloseIconVisible = categoryType != "all"
+        binding.redDot.isVisible = categoryType != "all" || minPrice != 0L || maxPrice != filterModel.maxPrice
     }
 
     override fun onQueryTextSubmit(query: String?): Boolean {
