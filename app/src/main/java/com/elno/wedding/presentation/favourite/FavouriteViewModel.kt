@@ -22,7 +22,7 @@ class FavouriteViewModel @Inject constructor(
 
     fun getFavouriteList() {
         _favouriteListResult.value = Resource.Loading()
-        databaseReference.collection("vendors").get().addOnSuccessListener { result ->
+        databaseReference.collection("vendors").whereEqualTo("overdue", false).get().addOnSuccessListener { result ->
             val offerList = arrayListOf<VendorModel?>()
             for (documentSnapshot in result) {
                 val offerModel = documentSnapshot.toObject(VendorModel::class.java)

@@ -59,7 +59,7 @@ class DashboardViewModel @Inject constructor(
 
     private fun getPopularOfferList() {
         _popularListResult.value = Resource.Loading()
-        databaseReference.collection("vendors").whereEqualTo("isPopular", true).get().addOnSuccessListener { result ->
+        databaseReference.collection("vendors").whereEqualTo("isPopular", true).whereEqualTo("overdue", false).get().addOnSuccessListener { result ->
             val offerList = arrayListOf<VendorModel?>()
             for (documentSnapshot in result) {
                 val offerModel = documentSnapshot.toObject(VendorModel::class.java)

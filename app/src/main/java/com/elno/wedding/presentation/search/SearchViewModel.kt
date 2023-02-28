@@ -42,7 +42,7 @@ class SearchViewModel @Inject constructor(
 
         val requestReference = if(minPrice == 0L && maxPrice == Static.filterModel.maxPrice) collectionReference else collectionReference.whereGreaterThanOrEqualTo("minPrice", minPrice).whereLessThanOrEqualTo("minPrice", maxPrice)
 
-        requestReference.get().addOnSuccessListener { result ->
+        requestReference.whereEqualTo("overdue", false).get().addOnSuccessListener { result ->
             val vendorList = arrayListOf<VendorModel?>()
             for (documentSnapshot in result) {
                 val vendorModel = documentSnapshot.toObject(VendorModel::class.java)
