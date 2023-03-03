@@ -27,8 +27,7 @@
                 app:layout_constraintDimensionRatio="1"
                 app:layout_constraintTop_toTopOf="parent"
                 android:layout_marginHorizontal="26dp"
-                android:id="@+id/imageView"
-                android:src="@drawable/ic_photograph"/>
+                android:id="@+id/imageView" />
 
             <TextView
                 android:id="@+id/categoryName"

@@ -16,8 +16,7 @@
         app:layout_constraintDimensionRatio="1"
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:srcCompat="@drawable/test" />
+        app:layout_constraintEnd_toEndOf="parent" />
 
     <View
         android:id="@+id/transparentView"

@@ -2,12 +2,15 @@ package com.elno.wedding.presentation.notification
 
 import android.content.Context
 import android.content.SharedPreferences
+import android.widget.LinearLayout
 import android.widget.Toast
 import androidx.appcompat.app.AlertDialog
+import androidx.core.content.ContextCompat
 import androidx.core.os.bundleOf
 import androidx.core.view.isVisible
 import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
+import androidx.recyclerview.widget.DividerItemDecoration
 import com.elno.wedding.MainActivity
 import com.elno.wedding.R
 import com.elno.wedding.common.Constants
@@ -19,6 +22,7 @@ import com.elno.wedding.presentation.adapter.NotificationAdapter
 import com.elno.wedding.presentation.base.BaseFragment
 import dagger.hilt.android.AndroidEntryPoint
 
+
 @AndroidEntryPoint
 class NotificationFragment : BaseFragment<FragmentNotificationBinding>(FragmentNotificationBinding::inflate) {
 
@@ -29,6 +33,9 @@ class NotificationFragment : BaseFragment<FragmentNotificationBinding>(FragmentN
 
     override fun setupViews() {
         binding.recyclerView.adapter = adapter
+        val dividerItemDecoration = DividerItemDecoration(context, LinearLayout.VERTICAL)
+        ContextCompat.getDrawable(requireContext(), R.drawable.divider)?.let { dividerItemDecoration.setDrawable(it) }
+        binding.recyclerView.addItemDecoration(dividerItemDecoration)
         val sharedPref: SharedPreferences? = context?.getSharedPreferences("sharedFile", Context.MODE_PRIVATE)
         val time = sharedPref?.getLong("deleteTime", 0) ?: 0
         viewModel.getNotificationList(time)

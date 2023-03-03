@@ -33,7 +33,6 @@
         android:orientation="vertical"
         android:layout_marginHorizontal="20dp"
         android:layout_marginTop="30dp"
-        android:paddingHorizontal="16dp"
         android:background="@drawable/text_view_background"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
@@ -48,6 +47,7 @@
             android:button="@drawable/radio_button_icon"
             android:paddingVertical="12dp"
             android:drawablePadding="12dp"
+            android:layout_marginHorizontal="16dp"
             android:drawableEnd="@drawable/flag_az"/>
 
         <View
@@ -64,6 +64,7 @@
             android:button="@drawable/radio_button_icon"
             android:paddingVertical="12dp"
             android:drawablePadding="12dp"
+            android:layout_marginHorizontal="16dp"
             android:drawableEnd="@drawable/flag_en"/>
 
         <View
@@ -80,6 +81,7 @@
             android:button="@drawable/radio_button_icon"
             android:paddingVertical="12dp"
             android:drawablePadding="12dp"
+            android:layout_marginHorizontal="16dp"
             android:drawableEnd="@drawable/flag_ru"/>
 
     </RadioGroup>
