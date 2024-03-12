@@ -45,6 +45,7 @@ class PrivacyPolicyFragment : BaseFragment<FragmentPrivacyPolicyBinding>(Fragmen
                 binding.loading.isVisible = false
                 Toast.makeText(context, resource.message, Toast.LENGTH_SHORT).show()
             }
+            else -> {}
         }
     }
 

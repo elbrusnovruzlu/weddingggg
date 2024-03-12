@@ -55,9 +55,11 @@ class DashboardFragment : BaseFragment<FragmentDashboardBinding>(FragmentDashboa
             }
             binding.offersRecyclerView.adapter = offerAdapter
 
-            categoryAdapter = CategoryAdapter { model ->
-                onCategoryClick(model)
-            }
+            categoryAdapter = CategoryAdapter(
+                true,
+                requireContext(),
+                { onCategoryClick(it) }, {}
+            )
             binding.categoriesRecyclerView.adapter = categoryAdapter
 
             viewModel.getSliderList()
@@ -93,9 +95,7 @@ class DashboardFragment : BaseFragment<FragmentDashboardBinding>(FragmentDashboa
     }
 
     private fun onCategoryClick(model: CategoryModel?) {
-        val sharedPreferences: SharedPreferences? = context?.getSharedPreferences("sharedFile", Context.MODE_PRIVATE)
-        sharedPreferences?.edit()?.putString(CATEGORY_TYPE, model?.type)?.apply()
-        (activity as MainActivity).navigateTo(R.id.searchFragment)
+        findNavController().navigate(R.id.searchFragment, bundleOf(CATEGORY_TYPE to model?.type))
     }
 
     private fun onOfferClick(model: VendorModel?) {

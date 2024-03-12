@@ -17,7 +17,7 @@ import com.elno.wedding.domain.model.VendorModel
 import com.elno.wedding.presentation.adapter.VendorAdapter
 import com.elno.wedding.presentation.base.BaseFragment
 import dagger.hilt.android.AndroidEntryPoint
-import java.util.ArrayList
+import kotlin.collections.ArrayList
 
 @AndroidEntryPoint
 class FavouriteFragment : BaseFragment<FragmentFavouriteBinding>(FragmentFavouriteBinding::inflate) {
@@ -58,13 +58,14 @@ class FavouriteFragment : BaseFragment<FragmentFavouriteBinding>(FragmentFavouri
                 else {
                     binding.emptyLayout.isVisible = false
                     binding.gridView.isVisible = true
-                    adapter.submitList(filteredList)
+                    adapter.submitList(ArrayList(filteredList))
                 }
             }
             is  Resource.Error -> {
                 binding.loading.isVisible = false
                 Toast.makeText(context, resource.message, Toast.LENGTH_SHORT).show()
             }
+            else -> {}
         }
     }
 

@@ -3,6 +3,8 @@
     <color name="brandColor">#4322CB</color>
     <color name="brandColorDark">#321B8F</color>
     <color name="brandColorLight">#1F3C1DBA</color>
+    <color name="filterColorLight">#1FBA661D</color>
+    <color name="filterColor">#BA661D</color>
     <color name="background">#f5f5fa</color>
     <color name="cell_color">#FFFFFF</color>
     <color name="text_black">#000000</color>

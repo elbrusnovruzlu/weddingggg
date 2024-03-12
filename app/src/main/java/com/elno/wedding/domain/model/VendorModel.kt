@@ -2,8 +2,10 @@ package com.elno.wedding.domain.model
 
 import android.os.Parcelable
 import kotlinx.parcelize.Parcelize
+import kotlinx.serialization.Serializable
 
 @Parcelize
+@Serializable
 data class VendorModel(
     val id: String? = null,
     val title: String? = null,
@@ -18,4 +20,5 @@ data class VendorModel(
     val images: ArrayList<String>? = null,
     val isPopular: Boolean? = null,
     val order: Int? = null,
+    val filter: HashMap<String, ArrayList<String>>? = null
 ): Parcelable

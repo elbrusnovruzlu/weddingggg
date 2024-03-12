@@ -103,6 +103,7 @@ class NotificationFragment : BaseFragment<FragmentNotificationBinding>(FragmentN
                 binding.loading.isVisible = false
                 Toast.makeText(context, resource.message, Toast.LENGTH_SHORT).show()
             }
+            else -> {}
         }
     }
 
@@ -119,6 +120,7 @@ class NotificationFragment : BaseFragment<FragmentNotificationBinding>(FragmentN
                 binding.loading.isVisible = false
                 Toast.makeText(context, resource.message, Toast.LENGTH_SHORT).show()
             }
+            else -> {}
         }
     }
 
@@ -139,9 +141,7 @@ class NotificationFragment : BaseFragment<FragmentNotificationBinding>(FragmentN
             }
             else if(action == NotificationAction.NEW_CATEGORY.value) {
                 id?.let {
-                    val sharedPreferences: SharedPreferences? = context?.getSharedPreferences("sharedFile", Context.MODE_PRIVATE)
-                    sharedPreferences?.edit()?.putString(Constants.CATEGORY_TYPE, it)?.apply()
-                    (activity as MainActivity).navigateTo(R.id.searchFragment)
+                    findNavController().navigate(R.id.searchFragment, bundleOf(Constants.CATEGORY_TYPE to it))
                 }
             }
         }

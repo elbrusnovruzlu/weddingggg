@@ -3,8 +3,7 @@ package com.elno.wedding.common
 import android.content.Context
 import android.content.res.Resources
 import com.elno.wedding.R
-import com.google.gson.Gson
-import java.lang.Exception
+import com.elno.wedding.domain.model.CategoryModel
 import java.text.SimpleDateFormat
 import java.util.*
 import kotlin.math.roundToInt
@@ -40,11 +39,15 @@ object UtilityFunctions {
         return map?.get(langString).orEmpty()
     }
 
+    fun getIdFromMap(map: Map<String, String>?): String {
+        return map?.get("id").orEmpty()
+    }
+
     fun getType(context: Context?, type: String?): String {
         return when(type) {
             "all" -> context?.getString(R.string.all).orEmpty()
             else -> {
-                getLocalizedTextFromMap(context, Static.filterModel.categories?.find { it?.type == type}?.name)
+                getLocalizedTextFromMap(context, Static.categories?.find { it?.type == type}?.name)
             }
         }
     }

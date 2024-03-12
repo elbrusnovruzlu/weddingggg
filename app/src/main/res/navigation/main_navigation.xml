@@ -16,6 +16,11 @@
         android:label="SearchFragment"
         tools:layout="@layout/fragment_search"/>
     <fragment
+        android:id="@+id/categoriesFragment"
+        android:name="com.elno.wedding.presentation.search.CategoriesFragment"
+        android:label="SearchFragment"
+        tools:layout="@layout/fragment_categories"/>
+    <fragment
         android:id="@+id/offerInfoFragment"
         android:name="com.elno.wedding.presentation.offerinfo.OfferInfoFragment"
         android:label="OfferInfoFragment"

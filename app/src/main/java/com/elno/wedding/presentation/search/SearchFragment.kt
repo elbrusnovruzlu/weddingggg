@@ -1,24 +1,26 @@
 package com.elno.wedding.presentation.search
 
-import android.content.Context
-import android.content.SharedPreferences
-import android.os.Bundle
 import android.widget.Toast
 import androidx.appcompat.widget.SearchView
+import androidx.core.content.ContextCompat
 import androidx.core.os.bundleOf
 import androidx.core.view.isVisible
 import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
+import androidx.recyclerview.widget.ConcatAdapter
 import androidx.recyclerview.widget.GridLayoutManager
+import androidx.recyclerview.widget.RecyclerView
 import com.elno.wedding.R
 import com.elno.wedding.common.Constants
 import com.elno.wedding.common.Resource
-import com.elno.wedding.common.Static.filterModel
 import com.elno.wedding.common.UtilityFunctions
 import com.elno.wedding.databinding.FragmentSearchBinding
+import com.elno.wedding.domain.model.FilteringModel
 import com.elno.wedding.domain.model.VendorModel
+import com.elno.wedding.presentation.adapter.LoadingAdapter
 import com.elno.wedding.presentation.adapter.VendorAdapter
 import com.elno.wedding.presentation.base.BaseFragment
+import com.elno.wedding.presentation.custom.EndlessRecyclerViewScrollListener
 import com.elno.wedding.presentation.search.filter.FilterBottomSheetFragment
 import dagger.hilt.android.AndroidEntryPoint
 
@@ -27,29 +29,31 @@ import dagger.hilt.android.AndroidEntryPoint
 class SearchFragment : BaseFragment<FragmentSearchBinding>(FragmentSearchBinding::inflate), SearchView.OnQueryTextListener {
 
     private val viewModel: SearchViewModel by viewModels()
-    private var adapter: VendorAdapter? = null
 
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-        val sharedPreferences: SharedPreferences? = context?.getSharedPreferences("sharedFile", Context.MODE_PRIVATE)
-        if(sharedPreferences?.contains(Constants.CATEGORY_TYPE) == true) {
-            viewModel.categoryType = sharedPreferences.getString(Constants.CATEGORY_TYPE, "all") ?: "all"
-            sharedPreferences.edit().remove(Constants.CATEGORY_TYPE).apply()
+    private var adapter: VendorAdapter? = VendorAdapter(
+        { onOfferClick(it) },
+        { onEmptyResult(it) },
+    )
+    private val loadingAdapter = LoadingAdapter()
+    private lateinit var baseAdapter: ConcatAdapter
+
+    private val recyclerViewListener = object : EndlessRecyclerViewScrollListener() {
+        override fun onLoadMore(page: Int, totalItemsCount: Int, view: RecyclerView) {
+            baseAdapter.addAdapter(loadingAdapter)
+            viewModel.searchVendorList(true)
         }
     }
 
     override fun setupViews() {
-        adapter = VendorAdapter(
-            { onOfferClick(it) },
-            { onEmptyResult(it) },
-        )
-        binding.gridView.adapter = adapter
+        binding.priceChip.isCloseIconVisible = false
+        viewModel.categoryType = arguments?.getString(Constants.CATEGORY_TYPE)
+        baseAdapter = ConcatAdapter(adapter)
+        binding.gridView.adapter = baseAdapter
         binding.gridView.layoutManager = GridLayoutManager(context, 2)
-        binding.categoryChip.text = UtilityFunctions.getType(context, viewModel.categoryType)
-        binding.categoryChip.isCloseIconVisible = viewModel.categoryType != "all"
-        binding.redDot.isVisible = viewModel.categoryType != "all"
-        viewModel.getVendorList()
-        viewModel.getFilterMaxPrice()
+        binding.gridView.addOnScrollListener(recyclerViewListener)
+        binding.title.text = UtilityFunctions.getType(context, viewModel.categoryType)
+        viewModel.getFilter()
+        viewModel.searchVendorList()
     }
 
     private fun onEmptyResult(isEmpty: Boolean) {
@@ -57,33 +61,19 @@ class SearchFragment : BaseFragment<FragmentSearchBinding>(FragmentSearchBinding
     }
 
     override fun setupListeners() {
-        binding.filter.setOnClickListener {
-            openFilterDialog()
-        }
-        binding.redDot.setOnClickListener {
-            openFilterDialog()
-        }
-        binding.categoryChip.setOnClickListener {
-            openFilterDialog()
+        binding.toolbar.setNavigationOnClickListener {
+            findNavController().popBackStack()
         }
         binding.priceChip.setOnClickListener {
             openFilterDialog()
         }
-        binding.categoryChip.setOnCloseIconClickListener {
-            viewModel.categoryType = "all"
-            setFilterIcon(viewModel.categoryType, viewModel.minPrice, viewModel.maxPrice)
-            binding.emptyLayout.isVisible = false
-            viewModel.getVendorList()
-        }
         binding.priceChip.setOnCloseIconClickListener {
-            viewModel.minPrice = 0L
-            viewModel.maxPrice = filterModel.maxPrice
-            setFilterIcon(viewModel.categoryType, viewModel.minPrice, viewModel.maxPrice)
+            viewModel.filteringModel = FilteringModel()
+            viewModel.lastIndex = 0
+            recyclerViewListener.resetState()
+            setFilterIcon()
             binding.emptyLayout.isVisible = false
-            viewModel.getVendorList()
-        }
-        binding.favourite.setOnClickListener {
-            findNavController().navigate(R.id.favouriteFragment)
+            viewModel.searchVendorList()
         }
         binding.searchView.setOnQueryTextListener(this)
     }
@@ -93,14 +83,6 @@ class SearchFragment : BaseFragment<FragmentSearchBinding>(FragmentSearchBinding
             viewLifecycleOwner,
             ::consumeVendorListResult
         )
-        viewModel.filterMaxPriceResult.observe(
-            viewLifecycleOwner,
-            ::consumeFilterMaxPriceResult
-        )
-    }
-
-    private fun consumeFilterMaxPriceResult(filterMaxPrice: Long?) {
-        setFilterIcon(viewModel.categoryType, viewModel.minPrice, viewModel.maxPrice)
     }
 
     private fun consumeVendorListResult(resource: Resource<ArrayList<VendorModel?>>) {
@@ -116,7 +98,7 @@ class SearchFragment : BaseFragment<FragmentSearchBinding>(FragmentSearchBinding
                 binding.searchView.setQuery("", false)
                 binding.searchView.clearFocus()
                 binding.searchView.setOnQueryTextListener(this)
-                adapter?.submitList(resource.data?: mutableListOf())
+                adapter?.submitList(resource.data?: arrayListOf())
                 binding.vendorShimmerView.stopShimmer()
                 binding.gridView.isVisible = true
                 binding.vendorShimmerView.isVisible = false
@@ -129,6 +111,20 @@ class SearchFragment : BaseFragment<FragmentSearchBinding>(FragmentSearchBinding
         }
     }
 
+    private fun consumeMoreVendorListResult(resource: Resource<ArrayList<VendorModel?>>) {
+        when(resource) {
+            is  Resource.Success -> {
+                baseAdapter.removeAdapter(loadingAdapter)
+                adapter?.addList(resource.data?: mutableListOf())
+            }
+            is  Resource.Error -> {
+                baseAdapter.removeAdapter(loadingAdapter)
+                Toast.makeText(context, resource.message, Toast.LENGTH_SHORT).show()
+            }
+            else -> {}
+        }
+    }
+
     private fun onOfferClick(model: VendorModel?) {
         findNavController().navigate(
             R.id.offerInfoFragment, bundleOf(
@@ -138,32 +134,36 @@ class SearchFragment : BaseFragment<FragmentSearchBinding>(FragmentSearchBinding
     }
 
     private fun openFilterDialog() {
-        val dialog = FilterBottomSheetFragment(viewModel.categoryType, viewModel.minPrice, viewModel.maxPrice) { categoryType, minPrice, maxPrice ->
-            onFilterResult(categoryType, minPrice, maxPrice)
+        val dialog = FilterBottomSheetFragment(viewModel.filteringModel, viewModel.filterResult) { filteringModel ->
+            onFilterResult(filteringModel)
         }
         dialog.show(parentFragmentManager, FilterBottomSheetFragment::class.java.canonicalName)
     }
 
-    private fun onFilterResult(categoryType: String, minPrice: Long, maxPrice: Long) {
-        setFilterIcon(categoryType, minPrice, maxPrice)
-        viewModel.categoryType = categoryType
-        viewModel.minPrice = minPrice
-        viewModel.maxPrice = maxPrice
+    private fun onFilterResult(filteringModel: FilteringModel) {
+        viewModel.filteringModel = filteringModel
+        setFilterIcon()
+        viewModel.searchQuery = ""
+        binding.searchView.setOnQueryTextListener(null)
+        binding.searchView.setQuery("", false)
+        binding.searchView.setOnQueryTextListener(this)
         binding.emptyLayout.isVisible = false
-        viewModel.getVendorList()
+        recyclerViewListener.resetState()
+        viewModel.lastIndex = 0
+        viewModel.searchVendorList()
     }
 
-    private fun setFilterIcon(categoryType: String, minPrice: Long, maxPrice: Long) {
-        binding.categoryChip.text = UtilityFunctions.getType(context, categoryType)
-        if(minPrice != 0L || maxPrice != filterModel.maxPrice) {
-            binding.priceChip.isVisible = true
-            binding.priceChip.text = "$minPrice ₼ - $maxPrice ₼"
+    private fun setFilterIcon() {
+        if(viewModel.filteringModel.minPrice != 0L || viewModel.filteringModel.maxPrice != 0L || viewModel.filteringModel.filterMap?.isNotEmpty() == true) {
+            binding.priceChip.isCloseIconVisible = true
+            binding.priceChip.setChipBackgroundColorResource(R.color.filterColorLight)
+            binding.priceChip.setTextColor( ContextCompat.getColor(requireContext(), R.color.filterColor))
         }
         else{
-            binding.priceChip.isVisible = false
+            binding.priceChip.isCloseIconVisible = false
+            binding.priceChip.setChipBackgroundColorResource(R.color.brandColorLight)
+            binding.priceChip.setTextColor( ContextCompat.getColor(requireContext(), R.color.brandColor))
         }
-        binding.categoryChip.isCloseIconVisible = categoryType != "all"
-        binding.redDot.isVisible = categoryType != "all" || minPrice != 0L || maxPrice != filterModel.maxPrice
     }
 
     override fun onQueryTextSubmit(query: String?): Boolean {
@@ -171,7 +171,13 @@ class SearchFragment : BaseFragment<FragmentSearchBinding>(FragmentSearchBinding
     }
 
     override fun onQueryTextChange(newText: String?): Boolean {
-        adapter?.filter?.filter(newText)
+        viewModel.lastIndex = 0
+        recyclerViewListener.resetState()
+        viewModel.searchQuery = newText.orEmpty()
+        viewModel.filteringModel = FilteringModel()
+        setFilterIcon()
+        binding.emptyLayout.isVisible = false
+        viewModel.searchVendorList()
         return false
     }
 

@@ -5,15 +5,16 @@ plugins {
     id 'dagger.hilt.android.plugin'
     id 'kotlin-parcelize'
     id 'com.google.gms.google-services'
+    id "org.jetbrains.kotlin.plugin.serialization" version "1.6.21"
 }
 
 android {
-    compileSdk 32
+    compileSdk 33
 
     defaultConfig {
         applicationId "com.elno.wedding"
         minSdk 21
-        targetSdk 32
+        targetSdk 33
         versionCode 1
         versionName "1.0"
 
@@ -45,11 +46,12 @@ dependencies {
     implementation 'androidx.core:core-ktx:1.7.0'
     implementation 'androidx.appcompat:appcompat:1.4.2'
     implementation 'com.google.android.material:material:1.6.1'
+    implementation 'androidx.recyclerview:recyclerview:1.2.1'
     implementation 'androidx.constraintlayout:constraintlayout:2.1.4'
     implementation 'androidx.legacy:legacy-support-v4:1.0.0'
     implementation 'com.google.firebase:firebase-database-ktx:20.0.6'
-    implementation platform('com.google.firebase:firebase-bom:31.2.0')
-    implementation 'com.google.firebase:firebase-firestore-ktx'
+    implementation platform('com.google.firebase:firebase-bom:32.7.4')
+    implementation 'com.google.firebase:firebase-firestore-ktx:24.10.3'
     implementation 'com.google.firebase:firebase-messaging-ktx:23.1.1'
     implementation 'com.google.firebase:firebase-analytics'
     testImplementation 'junit:junit:4.13.2'
@@ -60,8 +62,8 @@ dependencies {
     implementation 'com.squareup.retrofit2:converter-gson:2.9.0'
     implementation "com.squareup.okhttp3:okhttp:5.0.0-alpha.2"
     implementation "com.squareup.okhttp3:logging-interceptor:5.0.0-alpha.2"
-    implementation "com.google.dagger:hilt-android:2.38.1"
-    kapt "com.google.dagger:hilt-compiler:2.38.1"
+    implementation "com.google.dagger:hilt-android:2.51"
+    kapt "com.google.dagger:hilt-compiler:2.51"
     implementation "androidx.lifecycle:lifecycle-viewmodel-ktx:2.5.1"
     implementation "androidx.navigation:navigation-fragment-ktx:2.3.5"
     implementation "androidx.navigation:navigation-ui-ktx:2.3.5"
@@ -72,4 +74,10 @@ dependencies {
     implementation 'androidx.core:core-splashscreen:1.0.0'
     implementation 'com.airbnb.android:lottie:5.2.0'
     implementation 'com.google.android.gms:play-services-maps:18.1.0'
+    // for Gradle version 6.0 and later
+    implementation("com.algolia:algoliasearch-client-kotlin:2.0.0")
+
+    // Choose one of the following HTTP clients
+
+    implementation("io.ktor:ktor-client-android:2.0.1")
 }

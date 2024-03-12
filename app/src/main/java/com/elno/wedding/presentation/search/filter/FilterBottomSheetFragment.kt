@@ -1,24 +1,36 @@
 package com.elno.wedding.presentation.search.filter
 
+import android.content.Context
+import android.content.res.ColorStateList
 import android.os.Bundle
+import android.view.Gravity
+import android.view.LayoutInflater
 import android.view.View
-import android.view.View.NO_ID
+import android.widget.CheckBox
+import android.widget.LinearLayout
+import android.widget.TextView
+import androidx.core.content.ContextCompat
+import androidx.core.view.children
+import androidx.core.view.isVisible
+import androidx.core.widget.TextViewCompat
 import com.elno.wedding.R
-import com.elno.wedding.common.Static.filterModel
-import com.elno.wedding.common.UtilityFunctions.getLocalizedTextFromMap
+import com.elno.wedding.common.UtilityFunctions
+import com.elno.wedding.common.UtilityFunctions.getIdFromMap
+import com.elno.wedding.databinding.FilterPriceViewBinding
+import com.elno.wedding.databinding.FilterTitleViewBinding
 import com.elno.wedding.databinding.FragmentFilterBottomSheetBinding
-import com.elno.wedding.domain.model.CategoryModel
+import com.elno.wedding.domain.model.FilterModel
+import com.elno.wedding.domain.model.FilteringModel
 import com.elno.wedding.presentation.base.BaseDialogFragment
-import com.google.android.material.chip.Chip
 import dagger.hilt.android.AndroidEntryPoint
+
 
 @AndroidEntryPoint
 class FilterBottomSheetFragment(
-    private var categoryType: String,
-    private val minPrice: Long,
-    private val maxPrice: Long,
-    private val onClick: (categoryType: String, minPrice: Long, maxPrice: Long) -> Unit
-    ) : BaseDialogFragment<FragmentFilterBottomSheetBinding>(FragmentFilterBottomSheetBinding::inflate) {
+    private val filteringModel: FilteringModel,
+    private val filter: ArrayList<FilterModel>?,
+    private val onClick: (filteringModel: FilteringModel) -> Unit
+) : BaseDialogFragment<FragmentFilterBottomSheetBinding>(FragmentFilterBottomSheetBinding::inflate) {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
@@ -30,47 +42,119 @@ class FilterBottomSheetFragment(
             dismiss()
         }
 
-        binding.minPrice.label.text = getString(R.string.min_price)
-        binding.maxPrice.label.text = getString(R.string.max_price)
-
-        binding.priceSlider.addOnChangeListener { rangeSlider, value, fromUser ->
-            val rangeValues = rangeSlider.values
-            binding.minPrice.value.text = "${rangeValues[0].toInt()} ₼"
-            binding.maxPrice.value.text = "${rangeValues[1].toInt()} ₼"
+        context?.let { ctx ->
+            binding.filterContainer.removeAllViews()
+            filter?.forEachIndexed { index, it ->
+                val titleView = FilterTitleViewBinding.inflate(LayoutInflater.from(context), binding.rootView, false)
+                titleView.titleTextView.text = UtilityFunctions.getLocalizedTextFromMap(ctx, it.title)
+                titleView.root.id = index*2
+                binding.filterContainer.addView(titleView.root)
+                if(it.type == "price") {
+                    val priceView = FilterPriceViewBinding.inflate(LayoutInflater.from(context), binding.rootView, false)
+                    priceView.minPrice.label.text = getString(R.string.min_price)
+                    priceView.maxPrice.label.text = getString(R.string.max_price)
+                    priceView.minPrice.value.setText(getTextValue(filteringModel.minPrice))
+                    priceView.maxPrice.value.setText(getTextValue(filteringModel.maxPrice))
+                    priceView.minPrice.value.tag = "minPrice"
+                    priceView.maxPrice.value.tag = "maxPrice"
+                    priceView.root.id = index*2 + 1
+                    binding.filterContainer.addView(priceView.root)
+                } else if(it.type == "choice") {
+                    binding.checkBoxLayout.isVisible = true
+                    val linearLayout = LinearLayout(ctx)
+                    linearLayout.orientation = LinearLayout.VERTICAL
+                    linearLayout.tag = "choice"
+                    val params = LinearLayout.LayoutParams(
+                        LinearLayout.LayoutParams.MATCH_PARENT,
+                        LinearLayout.LayoutParams.WRAP_CONTENT
+                    )
+                    params.topMargin = UtilityFunctions.dpToPx(ctx, 4)
+                    linearLayout.layoutParams = params
+                    linearLayout.id = index*2 + 1
+                    it.choices?.forEachIndexed { choiceIndex, choice ->
+                        val checkBox = getCheckBoxLayout(UtilityFunctions.getLocalizedTextFromMap(ctx, choice), choiceIndex, ctx)
+                        val id = getIdFromMap(choice)
+                        checkBox.tag = id
+                        checkBox.isChecked = filteringModel.filterMap?.get(it.name)?.contains(id) == true
+                        linearLayout.addView(checkBox)
+                    }
+                    binding.filterContainer.addView(linearLayout)
+                }
+            }
         }
 
-        binding.priceSlider.setValues(minPrice.toFloat(), maxPrice.toFloat())
-        binding.priceSlider.valueTo = filterModel.maxPrice.toFloat()
-        binding.minPrice.value.text = "$minPrice ₼"
-        binding.maxPrice.value.text = "$maxPrice ₼"
 
-        filterModel.categories?.forEach {
-            addToChipGroup(it)
-        }
+
+
 
         binding.filterBtn.setOnClickListener {
-            val chipId = binding.chipGroup.checkedChipId
-            val type = if(chipId == NO_ID) {
-                "all"
-            } else {
-                val chip: Chip = binding.chipGroup.findViewById(chipId)
-                chip.tag as String
+            val minPrice = binding.filterContainer.findViewWithTag<TextView>("minPrice")
+            val maxPrice = binding.filterContainer.findViewWithTag<TextView>("maxPrice")
+            filteringModel.minPrice = getLongValue(minPrice.text.toString())
+            filteringModel.maxPrice = getLongValue(maxPrice.text.toString())
+
+            val hashMap = hashMapOf<String, ArrayList<String>>()
+            binding.filterContainer.children.forEachIndexed { index, view ->
+                if(view.tag == "choice") {
+                    val arrayList = ArrayList<String>()
+                    (view as? LinearLayout)?.children?.forEach {
+                        val checkBox = it as? CheckBox
+                        if(checkBox?.isChecked == true) {
+                            arrayList.add(checkBox.tag as String)
+                        }
+                    }
+                    filter?.getOrNull((index-1)/2)?.name?.let { choiceName ->
+                        if(arrayList.isNotEmpty()) hashMap[choiceName] = arrayList
+                    }
+                }
             }
-            onClick(type, binding.priceSlider.values[0].toLong(), binding.priceSlider.values[1].toLong())
+            filteringModel.filterMap = hashMap
+            onClick(filteringModel)
             dismiss()
         }
         binding.clearFilterBtn.setOnClickListener {
-            onClick("all", 0, filterModel.maxPrice)
+            onClick(FilteringModel())
             dismiss()
         }
     }
 
-    private fun addToChipGroup(categoryModel: CategoryModel?) {
-        val chip = layoutInflater.inflate(R.layout.chip_item, binding.chipGroup, false) as Chip
-        chip.text = getLocalizedTextFromMap(context, categoryModel?.name)
-        chip.isChecked = categoryType == categoryModel?.type
-        chip.tag = categoryModel?.type
-        binding.chipGroup.addView(chip)
+    private fun getTextValue(price: Long): String {
+        return if(price == 0L) "" else price.toString()
     }
+
+    private fun getLongValue(price: String): Long {
+        return if(price == "") 0 else price.toLong()
+    }
+
+
+    private fun getCheckBoxLayout(value: String?, index: Int, ctx: Context): CheckBox {
+        val checkBox = CheckBox(context)
+        val params = LinearLayout.LayoutParams(
+            LinearLayout.LayoutParams.MATCH_PARENT,
+            LinearLayout.LayoutParams.WRAP_CONTENT
+        )
+        checkBox.layoutParams = params
+        checkBox.setPadding(0, UtilityFunctions.dpToPx(ctx,4), 0, UtilityFunctions.dpToPx(ctx,4))
+        checkBox.id = index
+        checkBox.text = value
+        checkBox.gravity = Gravity.CENTER_VERTICAL
+        context?.let {
+            val colorStateList = ColorStateList(
+                arrayOf(
+                    intArrayOf(-android.R.attr.state_checked),
+                    intArrayOf(android.R.attr.state_checked)
+                ), intArrayOf(
+                    ContextCompat.getColor(it, R.color.asset_disabled),  // disabled
+                    ContextCompat.getColor(it, R.color.brandColor) // enabled
+                )
+            )
+            checkBox.buttonTintList = colorStateList
+        }
+
+        TextViewCompat.setTextAppearance(checkBox, R.style.sub_headline_regular_black)
+
+        return checkBox
+    }
+
 
 }

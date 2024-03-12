@@ -18,15 +18,21 @@ import com.elno.wedding.domain.model.VendorModel
 class VendorAdapter(
     private val onClick: (item: VendorModel?) -> Unit,
     private val onEmptyResult: (isEmpty: Boolean) -> Unit
-) :  RecyclerView.Adapter<VendorAdapter.ViewHolder>(), Filterable {
+) :  RecyclerView.Adapter<VendorAdapter.ViewHolder>() {
 
     private var list = mutableListOf<VendorModel?>()
-    private var filterList = mutableListOf<VendorModel?>()
+
 
     @SuppressLint("NotifyDataSetChanged")
-    fun submitList(newList: MutableList<VendorModel?>) {
-        list = newList
-        filterList = list
+    fun submitList(newList: ArrayList<VendorModel?>) {
+        list.clear()
+        list.addAll(newList)
+        notifyDataSetChanged()
+    }
+
+    @SuppressLint("NotifyDataSetChanged")
+    fun addList(newList: MutableList<VendorModel?>) {
+        list.addAll(newList)
         notifyDataSetChanged()
     }
 
@@ -37,12 +43,12 @@ class VendorAdapter(
     }
 
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
-        val item = filterList[position]
+        val item = list[position]
         holder.bind(item, onClick)
     }
 
     override fun getItemCount(): Int {
-        return filterList.size
+        return list.size
     }
 
     class ViewHolder(view: View) : RecyclerView.ViewHolder(view) {
@@ -76,34 +82,4 @@ class VendorAdapter(
             }
         }
     }
-
-    override fun getFilter(): Filter {
-        return object : Filter() {
-            override fun performFiltering(constraint: CharSequence?): FilterResults {
-                val charSearch = constraint.toString()
-                filterList = if (charSearch.isEmpty()) { list }
-                else {
-                    val resultList = ArrayList<VendorModel?>()
-                    list.forEach{
-                        if (it?.title?.lowercase()?.contains(charSearch.lowercase()) == true) {
-                            resultList.add(it)
-                        }
-                    }
-                    resultList
-                }
-                val filterResults = FilterResults()
-                filterResults.values = filterList
-                return filterResults
-            }
-
-            @Suppress("UNCHECKED_CAST")
-            override fun publishResults(constraint: CharSequence?, results: FilterResults?) {
-                filterList = results?.values as ArrayList<VendorModel?>
-                onEmptyResult(filterList.isEmpty())
-                notifyDataSetChanged()
-            }
-        }
-    }
-
-
 }

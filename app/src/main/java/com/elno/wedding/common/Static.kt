@@ -1,7 +1,7 @@
 package com.elno.wedding.common
 
-import com.elno.wedding.domain.model.FilterModel
+import com.elno.wedding.domain.model.CategoryModel
 
 object Static {
-    val filterModel = FilterModel()
+    var categories: ArrayList<CategoryModel?>? = null
 }
