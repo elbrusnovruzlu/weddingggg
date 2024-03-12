@@ -37,7 +37,7 @@
             app:layout_constraintEnd_toEndOf="parent"
             android:textAppearance="@style/body_semi_bold"/>
 
-        <ScrollView
+        <androidx.core.widget.NestedScrollView
             android:layout_width="match_parent"
             android:layout_height="0dp"
             app:layout_constraintTop_toBottomOf="@+id/filterTextView"
@@ -60,7 +60,7 @@
                     android:orientation="vertical" />
 
             </LinearLayout>
-        </ScrollView>
+        </androidx.core.widget.NestedScrollView>
 
 
 
